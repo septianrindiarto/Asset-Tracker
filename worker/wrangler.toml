@@ -10,8 +10,8 @@ compatibility_date = "2026-10-01"
 crons = ["15 2,6,10,14 * * *", "45 * * * *"]
 
 [vars]
-GH_OWNER = "GANTI_USERNAME_GITHUB"
-GH_REPO = "gold-tracker"
+GH_OWNER = "septianrindiarto"
+GH_REPO = "Asset-Tracker"
 GH_REF = "main"
 # Jadwal job harga dalam UTC "jam:menit" — harus sama dengan cron di atas.
 PRICE_SLOTS_UTC = "2:15,6:15,10:15,14:15"
