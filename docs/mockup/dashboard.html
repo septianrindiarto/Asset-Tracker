@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gold Tracker — Mockup v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--plum:#522D60;--mauve:#80426E;--peach:#F2A67B;--gold:#FFD38B;--cream:#FFF8F0;--cream2:#FBEFE4;--ink:#2B1A33;--muted:#7A6680;--line:#EEDFD3;--up:#2F8F6B;--down:#C4505E;--r:20px;--shadow:0 6px 24px rgba(82,45,96,.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--cream);color:var(--ink);font-size:14px;line-height:1.5}
+.num{font-variant-numeric:tabular-nums}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;font-size:inherit}
+button:disabled{opacity:.45;cursor:not-allowed}
+a{color:inherit}
+.app{display:flex;min-height:100vh}
+.side{width:248px;background:var(--plum);color:#fff;padding:24px 16px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;flex-shrink:0}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;padding:0 8px 24px}
+.logo i{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--gold),var(--peach));display:grid;place-items:center;color:var(--plum);font-style:normal}
+.nav button{display:flex;align-items:center;gap:12px;width:100%;padding:11px 14px;border-radius:14px;color:#E9D9EE;font-weight:500;margin-bottom:4px;text-align:left}
+.nav button:hover{background:rgba(255,255,255,.07)}
+.nav button.on{background:var(--mauve);color:#fff;font-weight:700}
+.nav button.on .ic{color:var(--gold)}
+.ic{width:20px;text-align:center;font-size:16px}
+.me{margin-top:auto;background:rgba(255,255,255,.08);border-radius:16px;padding:12px;display:flex;gap:10px;align-items:center}
+.me small{display:block;color:#D9C4DF;font-size:11px}
+.me button{margin-left:auto;color:#E9D9EE;font-size:18px}
+.av{width:36px;height:36px;border-radius:50%;background:var(--peach);color:var(--plum);display:grid;place-items:center;font-weight:800;flex-shrink:0}
+main{flex:1;min-width:0;padding:24px 32px 40px;display:flex;justify-content:center}
+.wrap{width:100%;max-width:1320px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.top h1{font-size:22px;font-weight:800;color:var(--plum)}
+.top p{color:var(--muted);font-size:13px}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.b-fresh{background:#E3F3EC;color:var(--up)}.b-late{background:#FFF1D6;color:#9A6A12}.b-stale{background:#F9E1E4;color:var(--down)}.b-demo{background:var(--gold);color:var(--plum)}.b-info{background:#EFE7F2;color:var(--mauve)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.btn{padding:9px 16px;border-radius:12px;font-weight:700;font-size:13px;white-space:nowrap}
+.btn-p{background:var(--plum);color:#fff}.btn-p:hover{background:var(--mauve)}
+.btn-a{background:var(--peach);color:var(--plum)}
+.btn-g{background:#fff;border:1px solid var(--line);color:var(--plum)}
+.btn-d{background:#F9E1E4;color:var(--down)}
+.btn-s{padding:6px 10px;font-size:12px;border-radius:10px}
+.iconbtn{width:38px;height:38px;border-radius:12px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:16px}
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g3{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{background:#fff;border-radius:var(--r);padding:20px;box-shadow:var(--shadow);border:1px solid #F5EAE0;min-width:0}
+.card h3{font-size:15px;font-weight:700;color:var(--plum);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.sub{color:var(--muted);font-size:12px}
+.mt{margin-top:16px}.mt8{margin-top:8px}
+.q{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#EFE7F2;color:var(--mauve);font-size:11px;font-weight:800;vertical-align:middle;margin-left:4px;flex-shrink:0}
+.q:hover{background:var(--mauve);color:#fff}
+.hero .q{background:rgba(255,255,255,.2);color:#fff}
+.plain{display:none;font-size:12px;color:var(--mauve);background:#F8F0F6;border-radius:10px;padding:6px 9px;margin-top:6px;line-height:1.45}
+body.plainmode .plain{display:block}
+.hero .plain{background:rgba(255,255,255,.12);color:#FBEAF5}
+.hero{background:linear-gradient(130deg,var(--plum) 0%,var(--mauve) 70%,#A35A72 100%);color:#fff;border-radius:24px;padding:24px 28px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,211,139,.45),transparent 70%);pointer-events:none}
+.hero .lbl{color:#F0DDF3;font-size:13px}
+.hero .big{font-size:38px;font-weight:800;letter-spacing:-.5px;margin:4px 0;color:var(--gold)}
+.hero .row{display:flex;gap:28px;flex-wrap:wrap;margin-top:14px}
+.hero .row small{display:block;color:#E6CFEA;font-size:12px}
+.hero .row b{font-size:16px}
+.pill{background:rgba(255,255,255,.16);padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.chips span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);padding:5px 10px;border-radius:10px;font-size:12px}
+.price .t{color:var(--muted);font-size:12px;font-weight:600;display:flex;justify-content:space-between;gap:6px;align-items:center}
+.price .v{font-size:20px;font-weight:800;margin:6px 0 2px}
+.chg{font-size:12px;font-weight:700}.chg.up{color:var(--up)}.chg.dn{color:var(--down)}
+.seg{display:inline-flex;background:var(--cream2);border-radius:12px;padding:3px;flex-wrap:wrap}
+.seg button{padding:6px 12px;border-radius:9px;font-size:12px;font-weight:600;color:var(--muted)}
+.seg button.on{background:#fff;color:var(--plum);box-shadow:0 2px 6px rgba(82,45,96,.1)}
+.chartwrap{position:relative;margin-top:12px}
+.tip{position:absolute;pointer-events:none;background:var(--plum);color:#fff;padding:6px 10px;border-radius:10px;font-size:12px;white-space:nowrap;opacity:0;transform:translate(-50%,-120%)}
+.tip b{color:var(--gold)}
+.sig{display:flex;gap:16px;align-items:center}
+.gauge{width:110px;flex-shrink:0}
+.sigtag{display:inline-block;padding:6px 14px;border-radius:12px;font-weight:800;letter-spacing:.5px;font-size:14px}
+.st-1{background:#DDF1E8;color:var(--up)}.st-2{background:#E8F4DA;color:#4D7A2A}.st-3{background:var(--gold);color:var(--plum)}.st-4{background:#FCE3D3;color:#A0512A}.st-5{background:#F9E1E4;color:var(--down)}
+.link{color:var(--mauve);font-weight:700;font-size:13px;text-decoration:none}
+.link:hover{text-decoration:underline}
+.goal{padding:12px 0;border-bottom:1px dashed var(--line)}
+.goal:last-of-type{border:none}
+.goal .h{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.bar{height:10px;background:var(--cream2);border-radius:99px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--peach),var(--gold))}
+.goal small{color:var(--muted);font-size:12px}
+.mini{display:flex;gap:4px}
+.mini button{width:26px;height:26px;border-radius:8px;color:var(--muted);font-size:13px}
+.mini button:hover{background:var(--cream2);color:var(--plum)}
+.news{display:flex;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.news:last-child{border:none}
+.nimg{width:44px;height:44px;border-radius:12px;flex-shrink:0;display:grid;place-items:center;font-size:20px;background:var(--cream2)}
+.news h4,.ncard h4{font-size:13.5px;font-weight:700;line-height:1.35}
+.news h4 a,.ncard h4 a{text-decoration:none}
+.news h4 a:hover,.ncard h4 a:hover{color:var(--mauve);text-decoration:underline}
+.meta{font-size:11.5px;color:var(--muted);margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.imp{padding:2px 8px;border-radius:8px;font-weight:700;font-size:11px}
+.imp.bull{background:#DDF1E8;color:var(--up)}.imp.bear{background:#F9E1E4;color:var(--down)}.imp.neu{background:#EFE7F2;color:var(--mauve)}
+.hold{display:grid;grid-template-columns:44px minmax(0,1.6fr) .8fr 1fr .7fr 64px;gap:12px;align-items:center;padding:12px 4px;border-bottom:1px solid var(--line)}
+.hold b{display:block;font-size:13.5px}.hold small{color:var(--muted);font-size:12px}
+.hold .r{text-align:right}
+.hhead{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.legend div{display:flex;align-items:center;gap:8px;font-size:13px;margin:8px 0}
+.legend i{width:12px;height:12px;border-radius:4px}.legend span{margin-left:auto;font-weight:700}
+.fac{display:grid;grid-template-columns:170px minmax(0,1fr) 54px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.fac:last-child{border:none}
+.fac b{font-size:13px}.fac small{display:block;color:var(--muted);font-size:11.5px}
+.dv{position:relative;height:12px;background:var(--cream2);border-radius:99px}
+.dv:before{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:#D9C6D6}
+.dv i{position:absolute;top:0;height:100%;border-radius:99px}
+.fac .sc{text-align:right;font-weight:800}
+.why{font-size:12.5px;grid-column:1/-1;background:var(--cream);border-radius:10px;padding:8px 10px}
+.box{background:var(--cream);border-radius:14px;padding:14px;margin-top:12px;font-size:13px}
+.box b{color:var(--plum)}
+.disc{font-size:12px;color:var(--muted);margin-top:14px;padding:10px 12px;border-left:3px solid var(--peach);background:#fff}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.filters button{padding:7px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-weight:600;font-size:12.5px;color:var(--muted)}
+.filters button.on{background:var(--plum);color:#fff;border-color:var(--plum)}
+.ncard .fact{font-size:13px;margin-top:8px}
+.ncard .infer{font-size:12.5px;margin-top:6px;background:var(--cream);padding:8px 10px;border-radius:10px;color:var(--mauve)}
+.cos{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.co{background:var(--cream);border-radius:14px;padding:10px 12px;text-decoration:none;display:block}
+.co:hover{background:var(--cream2)}
+.co b{font-size:13px;color:var(--plum)}.co small{display:block;color:var(--muted);font-size:11px}
+.field{margin-top:14px}
+.field>label{display:flex;justify-content:space-between;gap:8px;font-size:13px;font-weight:600}
+.field>label span{color:var(--mauve);font-weight:800}
+.hint{font-size:11.5px;color:var(--muted);margin-top:4px}
+input[type=range]{width:100%;margin-top:8px;accent-color:var(--mauve)}
+.in{width:100%;padding:9px 12px;border-radius:12px;border:1.5px solid var(--line);font-family:inherit;font-size:14px;margin-top:6px;background:var(--cream);color:var(--ink)}
+.in:focus{outline:none;border-color:var(--peach)}
+.in.sm{padding:6px 8px;font-size:13px;margin:0}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.f3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kpi{background:var(--cream);border-radius:16px;padding:14px}
+.kpi small{color:var(--muted);font-size:12px}.kpi b{display:block;font-size:20px;color:var(--plum)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+.role{padding:3px 9px;border-radius:8px;font-size:11.5px;font-weight:700;background:#EFE7F2;color:var(--mauve)}
+.job{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13px;flex-wrap:wrap}
+.job:last-child{border:none}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{padding:9px 16px;border-radius:12px;font-weight:700;font-size:13px;background:#fff;border:1px solid var(--line);color:var(--muted)}
+.tabs button.on{background:var(--plum);color:#fff;border-color:var(--plum)}
+.sw{position:relative;width:42px;height:24px;flex-shrink:0;display:inline-block}
+.sw input{opacity:0;width:0;height:0}
+.sw i{position:absolute;inset:0;background:#E2D5DE;border-radius:99px;cursor:pointer;transition:.2s}
+.sw i:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+.sw input:checked+i{background:var(--mauve)}
+.sw input:checked+i:before{transform:translateX(18px)}
+.trow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.trow:last-child{border:none}
+.trow b{font-size:13px;display:block}
+.checks{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.checks label{display:flex;gap:6px;align-items:center;font-size:12.5px;background:var(--cream);padding:6px 10px;border-radius:10px;cursor:pointer}
+.ov{position:fixed;inset:0;background:rgba(43,26,51,.45);display:none;place-items:center;z-index:50;padding:16px}
+.ov.on{display:grid}
+.modal{background:#fff;border-radius:24px;padding:24px;width:min(480px,100%);max-height:90vh;overflow:auto}
+.modal h2{color:var(--plum);font-size:18px;margin-bottom:4px}
+.cat{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px}
+.cat button{border:1.5px solid var(--line);border-radius:14px;padding:10px 6px;font-size:11.5px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:4px}
+.cat button.on{border-color:var(--mauve);background:#F6EDF4;color:var(--plum)}
+.cat button span{font-size:20px}
+.est{margin-top:14px;background:linear-gradient(120deg,#FFF3DF,#FDE7D9);border-radius:14px;padding:12px 14px;font-size:13px}
+.est b{color:var(--plum);font-size:17px}
+.mfoot{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
+.radio{display:flex;gap:8px;margin-top:6px}
+.radio label{flex:1;border:1.5px solid var(--line);border-radius:12px;padding:9px;font-size:13px;display:flex;gap:6px;align-items:center;cursor:pointer}
+.pop{position:fixed;z-index:70;background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(43,26,51,.25);padding:16px;width:min(340px,calc(100vw - 24px));display:none;border:1px solid var(--line)}
+.pop.on{display:block}
+.pop h4{color:var(--plum);font-size:14px;display:flex;justify-content:space-between}
+.pop .now{background:#F8F0F6;border-radius:10px;padding:10px;margin-top:8px;font-size:13px;color:var(--ink)}
+.pop .def{font-size:12px;color:var(--muted);margin-top:8px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);opacity:0;background:var(--plum);color:#fff;padding:10px 18px;border-radius:14px;font-weight:600;transition:.25s;z-index:80;pointer-events:none}
+.toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+.login{position:fixed;inset:0;z-index:90;background:linear-gradient(140deg,var(--plum),var(--mauve) 60%,var(--peach));display:grid;place-items:center;padding:16px;overflow:auto}
+.login .modal{width:min(420px,100%)}
+.acc{display:flex;align-items:center;gap:10px;width:100%;padding:10px;border:1.5px solid var(--line);border-radius:14px;margin-top:8px;text-align:left}
+.acc:hover{border-color:var(--peach);background:var(--cream)}
+.acc small{display:block;color:var(--muted);font-size:11.5px}
+.err{background:#F9E1E4;color:var(--down);padding:10px 12px;border-radius:12px;font-size:13px;margin-top:12px;display:none}
+.ro{background:#FFF1D6;color:#9A6A12;padding:8px 12px;border-radius:12px;font-size:12.5px;margin-bottom:14px}
+.bnav{display:none}
+.sheet{position:fixed;left:0;right:0;bottom:0;background:#fff;border-radius:24px 24px 0 0;padding:16px 16px 90px;z-index:45;transform:translateY(110%);transition:.25s;box-shadow:0 -10px 40px rgba(43,26,51,.2)}
+.sheet.on{transform:none}
+.sheet button{display:flex;gap:12px;align-items:center;width:100%;padding:14px;border-radius:14px;font-weight:600;color:var(--plum);text-align:left}
+.sheet button:hover{background:var(--cream)}
+@media (max-width:1180px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.cos{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:880px){
+  .side{display:none}
+  main{padding:16px 14px 96px}
+  .g3,.g2,.f3{grid-template-columns:1fr}
+  .hero .big{font-size:30px}
+  .hold{grid-template-columns:40px minmax(0,1.4fr) .9fr 56px}
+  .hold .hm{display:none}
+  .fac{grid-template-columns:110px minmax(0,1fr) 40px}
+  .cat{grid-template-columns:repeat(3,1fr)}
+  .bnav{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--plum);padding:8px 6px calc(8px + env(safe-area-inset-bottom));justify-content:space-around;z-index:46;border-radius:20px 20px 0 0}
+  .bnav button{color:#D9C4DF;font-size:10.5px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 6px}
+  .bnav button.on{color:var(--gold)}
+  .bnav .ic{font-size:18px}
+  .hide-mob{display:none}
+}
+</style>
+</head>
+<body class="plainmode">
+
+<div class="login" id="login">
+  <div class="modal">
+    <div class="logo" style="color:var(--plum);padding:0 0 8px"><i>✦</i>Gold Tracker</div>
+    <h2>Masuk</h2>
+    <div class="sub">Hanya akun yang diundang admin yang bisa masuk. <b>Mockup:</b> pilih akun contoh di bawah untuk mencoba hak akses berbeda.</div>
+    <div class="field"><label>Email</label><input class="in" id="lg-email" placeholder="nama@email.com"></div>
+    <button class="btn btn-p mt8" style="width:100%" data-act="login-email">Kirim link masuk</button>
+    <div class="err" id="lg-err"></div>
+    <div class="sub mt">Akun contoh:</div>
+    <div id="lg-acc"></div>
+  </div>
+</div>
+
+<div class="app">
+  <aside class="side">
+    <div class="logo"><i>✦</i>Gold Tracker</div>
+    <nav class="nav" id="nav"></nav>
+    <div class="me"><div class="av" id="me-av">A</div><div><b id="me-name">-</b><small id="me-role">-</small></div><button data-act="logout" title="Keluar">⎋</button></div>
+  </aside>
+  <main><div class="wrap">
+    <div class="top">
+      <div><h1 id="title"></h1><p id="subtitle"></p></div>
+      <div class="tools">
+        <span class="badge b-demo">Mockup · data contoh</span>
+        <span id="fresh" class="hide-mob"></span>
+        <button class="iconbtn" data-act="toggle-plain" id="btn-plain" title="Bahasa sederhana: tampilkan penjelasan di bawah setiap angka">💬</button>
+        <button class="iconbtn" data-act="toggle-priv" id="btn-priv" title="Mode privasi: sembunyikan nominal">👁</button>
+      </div>
+    </div>
+    <div id="page"></div>
+  </div></main>
+</div>
+
+<nav class="bnav" id="bnav"></nav>
+<div class="sheet" id="sheet"></div>
+<div class="ov" id="ov" data-act="ov-close"><div class="modal" id="modal"></div></div>
+<div class="pop" id="pop"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================================
+   GOLD TRACKER MOCKUP v2
+   - Semua angka & penjelasan dihitung dari STATE (bukan teks mati)
+   - Semua parameter dapat diubah di halaman Pengaturan
+   - Data per user (portofolio, tujuan, preferensi) sesuai akun login
+   - State tersimpan di localStorage browser (mockup only)
+   ===================================================================== */
+const TODAY = new Date('2026-10-31T09:20:00+07:00');
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rp = n => 'Rp ' + Math.round(n).toLocaleString('id-ID');
+const rpS = n => Math.abs(n) >= 1e9 ? 'Rp ' + (n/1e9).toLocaleString('id-ID',{maximumFractionDigits:2}) + ' M' : Math.abs(n) >= 1e6 ? 'Rp ' + (n/1e6).toLocaleString('id-ID',{maximumFractionDigits:1}) + ' jt' : rp(n);
+const pc = (n, d=1) => (n>=0?'':'−') + Math.abs(n).toLocaleString('id-ID',{maximumFractionDigits:d,minimumFractionDigits:d}) + '%';
+const gr = n => n.toLocaleString('id-ID',{maximumFractionDigits:2}) + ' g';
+const arrow = n => n >= 0 ? '▲' : '▼';
+const uid = () => Math.random().toString(36).slice(2, 9);
+const fmtDate = d => d ? new Date(d).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}) : 'Unlimited';
+const C = {plum:'#522D60',mauve:'#80426E',peach:'#F2A67B',gold:'#FFD38B',up:'#2F8F6B',down:'#C4505E'};
+
+/* ---------------- DEFAULT STATE ---------------- */
+const CATS = {bar:['🟨','Batangan'],dig:['📱','Digital'],jew:['💍','Perhiasan'],coin:['🪙','Koin/Dinar'],rel:['📈','Aset terkait']};
+const NEWS_CATS = ['Bank sentral','Moneter','Geopolitik','Indonesia','Perusahaan','Ritel emas'];
+function defaults(){
+  return {
+    sys: {
+      refProduct:'antam', jewCut:10, coinCut:5,
+      staleSpot:8, staleBrand:24, aiSummary:true,
+      schedPrices:'09:15, 13:15, 17:15, 21:15', schedNews:'06:30, 18:30', schedDigest:'07:00',
+      sources:{xau:true,fx:true,antam:true,ubs:true,galeri24:true,gnews:true,wgc:true,idx:true}
+    },
+    ana: {
+      w:{trend:25,mom:20,macro:20,cost:20,sent:10,vol:5},
+      rsiHigh:70, rsiLow:30, spreadWarn:6, maFast:50, maSlow:200,
+      cut:{c1:40,c2:15,c3:-15,c4:-40}
+    },
+    products: [
+      {id:'antam',cat:'bar',name:'Antam',method:'scrape',sell:2480000,bb:2320000,active:true,upd:'09:15'},
+      {id:'ubs',cat:'bar',name:'UBS',method:'scrape',sell:2410000,bb:2285000,active:true,upd:'09:15'},
+      {id:'galeri24',cat:'bar',name:'Galeri24',method:'scrape',sell:2390000,bb:2275000,active:true,upd:'kemarin',fail:true},
+      {id:'lotus',cat:'bar',name:'Lotus Archi',method:'manual',sell:2440000,bb:2250000,active:true,upd:'28 Okt'},
+      {id:'pegadaian',cat:'dig',name:'Tabungan Emas Pegadaian',method:'manual',sell:2405000,bb:2308000,active:true,upd:'30 Okt'},
+      {id:'pluang',cat:'dig',name:'Pluang',method:'manual',sell:2395000,bb:2310000,active:true,upd:'30 Okt'},
+      {id:'jewelry',cat:'jew',name:'Perhiasan (rumus kadar)',method:'formula',active:true},
+      {id:'dinar',cat:'coin',name:'Dinar / koin (rumus kadar)',method:'formula',active:true},
+      {id:'etf',cat:'rel',name:'ETF / reksa dana emas',method:'manual',sell:0,bb:0,unitPrice:1250,active:true,upd:'30 Okt'}
+    ],
+    users: [
+      {id:'u1',name:'Arhent',email:'arhent@contoh.id',role:'admin',status:'active',end:null,tg:true},
+      {id:'u2',name:'Rina',email:'rina@contoh.id',role:'user',status:'active',end:'2026-12-31',tg:false},
+      {id:'u3',name:'Dewi',email:'dewi@contoh.id',role:'viewer',status:'active',end:'2026-11-05',tg:false},
+      {id:'u4',name:'Budi',email:'budi@contoh.id',role:'user',status:'active',end:'2026-09-30',tg:false}
+    ],
+    hold: {
+      u1:[
+        {id:uid(),pid:'antam',gram:25,cost:58000000,date:'2023-03-12',note:'LM 25 g'},
+        {id:uid(),pid:'ubs',gram:10,cost:23600000,date:'2024-06-02',note:'2 × 5 g'},
+        {id:uid(),pid:'galeri24',gram:5,cost:11900000,date:'2025-01-20',note:''},
+        {id:uid(),pid:'pegadaian',gram:12.5,cost:28100000,date:'2025-05-01',note:'DCA bulanan'},
+        {id:uid(),pid:'jewelry',gram:19.5,karat:18,cost:22560000,date:'2022-11-10',note:'Kalung & cincin'},
+        {id:uid(),pid:'dinar',gram:8.5,karat:22,cost:8100000,date:'2021-08-17',note:'2 keping'}
+      ],
+      u2:[
+        {id:uid(),pid:'antam',gram:10,cost:19800000,date:'2024-02-14',note:''},
+        {id:uid(),pid:'pluang',gram:3.2,cost:7300000,date:'2025-09-09',note:''}
+      ],
+      u3:[{id:uid(),pid:'jewelry',gram:12,karat:22,cost:16500000,date:'2023-07-07',note:'Gelang'}],
+      u4:[]
+    },
+    goals: {
+      u1:[{id:uid(),icon:'🎓',name:'Dana pendidikan anak',type:'gram',target:80,deadline:'2029-12-31',dca:2000000},
+          {id:uid(),icon:'🛟',name:'Dana darurat',type:'idr',target:50000000,deadline:'',dca:0}],
+      u2:[{id:uid(),icon:'💍',name:'Tabungan menikah',type:'idr',target:60000000,deadline:'2027-12-31',dca:1500000}],
+      u3:[], u4:[]
+    },
+    prefs: {},
+    session: null
+  };
+}
+const PREF_DEFAULT = {plain:true, priv:false, ref:'', digest:true, digestTime:'07:00', alertUp:3, alertDown:3, alertSignal:true, news:[...NEWS_CATS]};
+
+/* Data pasar contoh (di produksi: dari tabel price_snapshots & indikator) */
+const MKT = {xau:4380.04, xauChg:.8, fx:16612, fxChg:-.2, rsi:71, vsMaSlow:8.2, maFastPrice:2390000, dxy1m:-1.4, sent:.3, vol:14, volMed:15, antamChg:.6, bbChg:.4};
+const SPOT_G = () => MKT.xau * MKT.fx / 31.1034768;
+
+/* ---------------- STATE & PERSISTENCE ---------------- */
+let S;
+try { S = JSON.parse(localStorage.getItem('gt_mock_v2')) || defaults(); } catch(e) { S = defaults(); }
+const save = () => { try { localStorage.setItem('gt_mock_v2', JSON.stringify(S)); } catch(e) {} };
+let UI = {page:'home', src:'spot', range:90, ctx:'fisik', newsCat:'Semua', setTab:'profil', addCat:'bar', priv:false};
+const me = () => S.users.find(u => u.id === S.session);
+const isAdmin = () => me()?.role === 'admin';
+const canEdit = () => me()?.role !== 'viewer';
+const P = () => (S.prefs[S.session] = Object.assign({}, PREF_DEFAULT, S.prefs[S.session] || {}));
+const prod = id => S.products.find(p => p.id === id);
+
+/* ---------------- ACCESS RULE (sama dengan has_access() di DB) ---------------- */
+function accessState(u){
+  if (u.status !== 'active') return {ok:false, why: u.status === 'suspended' ? 'Akun sedang ditangguhkan admin.' : 'Akses akun ini sudah dicabut.'};
+  if (u.end && new Date(u.end + 'T23:59:59+07:00') < TODAY) return {ok:false, why:`Masa akses berakhir pada ${fmtDate(u.end)}. Hubungi admin untuk perpanjangan.`};
+  return {ok:true};
+}
+
+/* ---------------- VALUATION ENGINE ---------------- */
+function refProd(){ return prod(P().ref || S.sys.refProduct) || prod('antam'); }
+function valueOf(h){
+  const p = prod(h.pid); if (!p) return {liq:0, mkt:0, how:''};
+  const ref = refProd();
+  if (p.method === 'formula'){
+    const cutP = p.cat === 'jew' ? S.sys.jewCut : S.sys.coinCut;
+    const k = (h.karat || 24) / 24, cut = cutP / 100;
+    return {liq: k * ref.bb * h.gram * (1 - cut), mkt: k * ref.sell * h.gram, how:`${h.karat||24}/24 × buyback ${ref.name} × ${gr(h.gram)} × (1 − potongan ${cutP}%)`};
+  }
+  if (p.cat === 'rel') return {liq: h.gram * p.unitPrice, mkt: h.gram * p.unitPrice, how:'jumlah unit × harga per unit'};
+  return {liq: p.bb * h.gram, mkt: p.sell * h.gram, how:`buyback ${p.name} ${rp(p.bb)}/g × ${gr(h.gram)}`};
+}
+function portfolio(){
+  const H = S.hold[S.session] || [];
+  let liq=0, mkt=0, cost=0, gram=0; const byCat={};
+  H.forEach(h => { const v = valueOf(h); liq+=v.liq; mkt+=v.mkt; cost+=h.cost; const p=prod(h.pid); if(p && p.cat!=='rel'){ gram+=h.gram; byCat[p.cat]=(byCat[p.cat]||0)+h.gram; } });
+  return {H, liq, mkt, cost, gram, byCat, pl: liq - cost, plPct: cost ? (liq/cost - 1) * 100 : 0};
+}
+
+/* ---------------- SIGNAL ENGINE (parameter dari Pengaturan > Analisis) ---------------- */
+function spreadOf(p){ return p && p.sell ? (p.sell - p.bb) / p.sell * 100 : 0; }
+function factors(ctx){
+  const a = S.ana, r0 = refProd(), sp = spreadOf(r0);
+  const F = [];
+  const t = MKT.vsMaSlow;
+  F.push({k:'trend',name:'Tren',m:'ma',raw:`Harga ${pc(t)} vs rata-rata ${a.maSlow} hari`, s: t>10?2 : t>2?1 : t>-2?0 : t>-10?-1 : -2});
+  const r = MKT.rsi;
+  F.push({k:'mom',name:'Momentum',m:'rsi',raw:`RSI(14) = ${r}`, s: r>a.rsiHigh+10?-2 : r>a.rsiHigh?-1 : r<a.rsiLow?2 : r<a.rsiLow+10?1 : 0});
+  const d = MKT.dxy1m;
+  F.push({k:'macro',name:'Makro (dolar)',m:'dxy',raw:`Indeks dolar ${pc(d)} sebulan`, s: d<-3?2 : d<-1?1 : d>3?-2 : d>1?-1 : 0});
+  if (ctx === 'fisik') F.push({k:'cost',name:'Biaya fisik',m:'spread',raw:`Spread ${r0.name} ${pc(sp)}`, s: sp>a.spreadWarn+3?-2 : sp>a.spreadWarn?-1 : sp<a.spreadWarn-2?1 : 0});
+  F.push({k:'sent',name:'Sentimen berita',m:'sent',raw:`Rata-rata 7 hari ${MKT.sent>0?'+':''}${MKT.sent.toLocaleString('id-ID')}`, s: MKT.sent>.2?1 : MKT.sent<-.2?-1 : 0});
+  F.push({k:'vol',name:'Volatilitas',m:'vol',raw:`${MKT.vol}% (normal ${MKT.volMed}%)`, s: MKT.vol>MKT.volMed*1.5?-1 : 0});
+  const W = F.reduce((x,f)=>x + a.w[f.k], 0) || 1;
+  F.forEach(f => f.wp = a.w[f.k] / W * 100);
+  const score = Math.round(F.reduce((x,f)=>x + a.w[f.k] * f.s / 2, 0) / W * 100);
+  return {F, score};
+}
+const SIGNALS = [['AKUMULASI','st-1'],['BELI BERTAHAP','st-2'],['TAHAN','st-3'],['TUNGGU','st-4'],['PERTIMBANGKAN JUAL','st-5']];
+function signalOf(score){ const c = S.ana.cut; return SIGNALS[score>=c.c1?0 : score>=c.c2?1 : score>=c.c3?2 : score>=c.c4?3 : 4]; }
+function rationale(ctx){
+  const {F} = factors(ctx);
+  const pos = F.filter(f=>f.s>0).map(f=>f.name.toLowerCase()), neg = F.filter(f=>f.s<0).map(f=>f.name.toLowerCase());
+  let s = '';
+  if (pos.length) s += `Pendukung: ${pos.join(', ')}. `;
+  if (neg.length) s += `Penahan: ${neg.join(', ')}. `;
+  return s || 'Semua faktor netral.';
+}
+function invalidation(ctx){
+  const a = S.ana, r = refProd(), L = [];
+  L.push(`Harga turun mendekati rata-rata ${a.maFast} hari (≈ ${rp(MKT.maFastPrice)}/g)`);
+  if (MKT.rsi > a.rsiHigh) L.push(`RSI kembali di bawah ${a.rsiHigh - 15}`);
+  if (ctx === 'fisik' && spreadOf(r) > a.spreadWarn) L.push(`Spread ${r.name} menyempit di bawah ${a.spreadWarn}%`);
+  L.push('Indeks dolar naik lebih dari 2% dalam sepekan');
+  return L;
+}
+
+/* ---------------- EXPLAIN ENGINE: penjelasan sederhana dinamis ----------------
+   Di produksi: template disimpan di tabel metric_explanations & diisi nilai terkini
+   oleh job analysis; AI (opsional) hanya merapikan kalimat. */
+const EX = {
+  liq:{t:'Nilai likuidasi', d:'Perkiraan uang yang diterima bila semua emas dijual hari ini: harga buyback (jual-kembali) dikurangi potongan.',
+       f:()=>{const p=portfolio(); return `Kalau semua emasmu dijual hari ini, kira-kira kamu menerima <b>${rpS(p.liq)}</b>. Ini angka paling "jujur" untuk menilai asetmu.`}},
+  mkt:{t:'Nilai pasar', d:'Harga bila kamu membeli emas yang sama hari ini (harga jual toko).',
+       f:()=>{const p=portfolio(); return `Untuk membeli emas yang sama hari ini butuh <b>${rpS(p.mkt)}</b>. Selisihnya dengan nilai likuidasi (${rpS(p.mkt-p.liq)}) adalah "biaya" jual-beli emas fisik.`}},
+  cost:{t:'Modal', d:'Total uang yang kamu keluarkan saat membeli semua emas yang tercatat.',
+       f:()=>{const p=portfolio(); return `Total uang yang sudah kamu keluarkan: <b>${rpS(p.cost)}</b>.`}},
+  pl:{t:'Untung/rugi (P/L)', d:'Profit/Loss belum terealisasi = nilai likuidasi − modal.',
+       f:()=>{const p=portfolio(); return p.cost ? `Dibanding modalmu, aset emasmu sekarang <b>${p.pl>=0?'untung':'rugi'} ${rpS(Math.abs(p.pl))}</b> (${pc(p.plPct)}) — dihitung dengan harga jual-kembali, jadi sudah realistis.` : 'Belum ada transaksi tercatat.'}},
+  gram:{t:'Total gram', d:'Jumlah berat emas fisik & digital (aset terkait seperti ETF tidak dihitung).',
+       f:()=>{const p=portfolio(); return `Kamu memiliki <b>${gr(p.gram)}</b> emas, setara ${(p.gram/31.1034768).toLocaleString('id-ID',{maximumFractionDigits:3})} troy ounce (satuan emas dunia).`}},
+  xau:{t:'XAU/USD', d:'Harga 1 troy ounce (31,1 gram) emas murni di pasar dunia, dalam dolar AS.',
+       f:()=>`Harga emas dunia hari ini <b>${MKT.xauChg>=0?'naik':'turun'} ${pc(Math.abs(MKT.xauChg))}</b>. Ini "harga induk" yang memengaruhi semua harga emas di toko.`},
+  fx:{t:'Kurs USD/IDR', d:'Berapa rupiah untuk 1 dolar AS.',
+       f:()=>`1 dolar = <b>Rp ${MKT.fx.toLocaleString('id-ID')}</b>. Kalau rupiah melemah (angka naik), harga emas dalam rupiah ikut naik walau harga dunia tetap. Hari ini rupiah ${MKT.fxChg<0?'menguat':'melemah'} ${pc(Math.abs(MKT.fxChg))}.`},
+  spot:{t:'Spot per gram', d:'Harga dunia × kurs ÷ 31,1 — harga emas murni "mentah" tanpa biaya cetak, pajak, dan margin toko.',
+       f:()=>{const r=refProd(), prem=(r.sell/SPOT_G()-1)*100; return `Emas murni "mentah" sekitar <b>${rp(SPOT_G())}/g</b>. Harga jual ${r.name} lebih mahal ${pc(prem)} karena biaya cetak, sertifikat, dan margin.`}},
+  sell:{t:'Harga jual', d:'Harga saat kamu membeli dari penjual/merek.',
+       f:(id)=>{const p=prod(id)||refProd(); return `Untuk membeli 1 gram ${p.name} hari ini kamu bayar <b>${rp(p.sell)}</b>.`}},
+  bb:{t:'Harga buyback', d:'Harga saat kamu menjual kembali emas ke penerbit/toko.',
+       f:(id)=>{const p=prod(id)||refProd(); return `Kalau kamu menjual 1 gram ${p.name} hari ini, kamu menerima sekitar <b>${rp(p.bb)}</b>.`}},
+  spread:{t:'Spread', d:'Selisih harga jual dan buyback, dalam persen.',
+       f:(id)=>{const p=prod(id)||refProd(), s=spreadOf(p); return `Selisih beli-jual ${p.name} <b>${pc(s)}</b>. Artinya kalau beli hari ini lalu langsung dijual, kamu rugi sekitar ${pc(s)} — harga perlu naik minimal segitu dulu untuk balik modal. ${s>S.ana.spreadWarn?'Ini di atas batas wajar yang diatur ('+S.ana.spreadWarn+'%).':'Masih dalam batas wajar.'}`}},
+  rsi:{t:'RSI', d:'Relative Strength Index: angka 0–100 yang mengukur seberapa cepat harga naik/turun dalam 14 hari.',
+       f:()=>{const a=S.ana, r=MKT.rsi; return r>a.rsiHigh?`RSI <b>${r}</b> (di atas ${a.rsiHigh}): harga naik cukup cepat — seperti habis lari sprint, biasanya butuh "istirahat" (turun sebentar) sebelum naik lagi.` : r<a.rsiLow?`RSI <b>${r}</b> (di bawah ${a.rsiLow}): harga sudah turun cepat — sering jadi momen menarik untuk beli bertahap.` : `RSI <b>${r}</b>: harga bergerak normal, tidak terlalu "panas" atau "dingin".`}},
+  ma:{t:'Rata-rata harga (MA)', d:'Moving Average: rata-rata harga N hari terakhir, untuk melihat arah tren.',
+       f:()=>`Harga sekarang <b>${pc(Math.abs(MKT.vsMaSlow))} ${MKT.vsMaSlow>=0?'di atas':'di bawah'}</b> rata-rata ${S.ana.maSlow} hari. ${MKT.vsMaSlow>=0?'Artinya tren jangka panjang sedang naik.':'Artinya tren jangka panjang sedang melemah.'}`},
+  dxy:{t:'Indeks dolar (DXY)', d:'Ukuran kekuatan dolar AS terhadap mata uang utama dunia.',
+       f:()=>`Dolar AS ${MKT.dxy1m<0?'melemah':'menguat'} <b>${pc(Math.abs(MKT.dxy1m))}</b> sebulan terakhir. ${MKT.dxy1m<0?'Dolar lemah biasanya membuat emas lebih diminati.':'Dolar kuat biasanya menekan harga emas.'}`},
+  sent:{t:'Sentimen berita', d:'Rata-rata nada berita 7 hari, skala −1 (buruk untuk emas) sampai +1 (baik untuk emas).',
+       f:()=>`Nada berita seminggu terakhir <b>${MKT.sent>.2?'cenderung positif':MKT.sent<-.2?'cenderung negatif':'netral'}</b> untuk emas. Bobotnya sengaja dibuat kecil karena berita cepat berubah.`},
+  vol:{t:'Volatilitas', d:'Seberapa besar harga naik-turun; dihitung dari 30 hari terakhir, disetahunkan.',
+       f:()=>`Harga sedang bergerak <b>${MKT.vol>MKT.volMed*1.5?'lebih liar':'normal'}</b> (${MKT.vol}% vs biasanya ${MKT.volMed}%). Makin tinggi, makin besar kemungkinan harga berubah cepat.`},
+  score:{t:'Skor sinyal', d:'Gabungan semua faktor berbobot, dari −100 (cenderung jual) sampai +100 (cenderung beli).',
+       f:()=>{const {F,score}=factors(UI.page==='signal'?UI.ctx:'fisik'); return `Skor <b>${score>0?'+':''}${score}</b> dari ${F.length} faktor. Batas sinyal diatur admin: ≥${S.ana.cut.c1} akumulasi, ≥${S.ana.cut.c2} beli bertahap, ≥${S.ana.cut.c3} tahan, ≥${S.ana.cut.c4} tunggu, di bawahnya pertimbangkan jual.`}},
+  backtest:{t:'Backtest', d:'Uji aturan sinyal memakai data masa lalu, seolah-olah dipakai sejak dulu.',
+       f:()=>`Kalau aturan ini dipakai 5 tahun ke belakang, hasilnya dibandingkan dengan "nabung rutin" (DCA). Jika tidak lebih baik dari DCA, sinyal diberi label <b>Eksperimental</b>.`},
+  drawdown:{t:'Drawdown', d:'Penurunan terdalam dari titik tertinggi sebelum pulih.',
+       f:()=>'Menunjukkan "rasa sakit" terbesar yang pernah dialami: seberapa dalam nilai sempat turun sebelum naik lagi.'},
+  dca:{t:'DCA', d:'Dollar Cost Averaging: menabung rutin dengan nominal sama setiap periode.',
+       f:()=>'Nabung rutin dengan nominal sama tiap bulan tanpa menebak waktu terbaik — saat harga murah dapat gram lebih banyak, saat mahal lebih sedikit.'},
+  proj:{t:'Pesimis / paling mungkin / optimis', d:'Persentil P10 / P50 / P90 hasil simulasi: 10% / 50% / 90% kemungkinan hasil berada di bawah angka tersebut.',
+       f:()=>{const r=projCalc(); return `Dari banyak kemungkinan: hasil terburuk yang wajar ≈ <b>${rpS(r.p10)}</b>, paling mungkin ≈ <b>${rpS(r.p50)}</b>, terbaik yang wajar ≈ <b>${rpS(r.p90)}</b>. Bukan janji, hanya gambaran rentang.`}},
+  fresh:{t:'Status data', d:'Fresh = terbaru sesuai jadwal; Terlambat = melewati jadwal; Stale = terlalu lama, tidak dipakai untuk sinyal.',
+       f:()=>`Harga spot dianggap basi setelah <b>${S.sys.staleSpot} jam</b>, harga merek setelah <b>${S.sys.staleBrand} jam</b> (bisa diatur admin).`},
+  karat:{t:'Kadar (karat)', d:'Kemurnian emas: 24K = 99,9% murni; 22K ≈ 91,7%; 18K = 75%.',
+       f:()=>`Nilai perhiasan dihitung: kadar/24 × harga buyback ${refProd().name} × gram × (1 − potongan toko ${S.sys.jewCut}%).`}
+};
+const ex = (k, arg='') => { try { return EX[k].f(arg); } catch(e) { return ''; } };
+const Q = (k, arg='') => `<button class="q" data-act="explain" data-k="${k}" data-arg="${arg}" title="Apa artinya?">?</button>`;
+const PL = (k, arg='') => `<div class="plain">💬 ${ex(k, arg)}</div>`;
+
+/* ---------------- NAV ---------------- */
+const PAGES = [
+  {id:'home',ic:'⌂',name:'Beranda',sub:()=>TODAY.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})},
+  {id:'port',ic:'◈',name:'Portofolio',sub:()=>'Semua jenis emasmu dalam satu tempat'},
+  {id:'signal',ic:'◎',name:'Rekomendasi',sub:()=>'Sinyal berbasis aturan, alasan bisa dicek'},
+  {id:'news',ic:'☰',name:'Berita',sub:()=>`Diperbarui ${S.sys.schedNews} WIB`},
+  {id:'proj',ic:'↗',name:'Proyeksi',sub:()=>'Rencanakan target emasmu'},
+  {id:'settings',ic:'⚙',name:'Pengaturan',sub:()=>isAdmin()?'Preferensi pribadi & parameter sistem':'Preferensi pribadi'},
+  {id:'admin',ic:'👥',name:'Akses & Sistem',sub:()=>'Kelola pengguna dan job otomatis',admin:true}
+];
+function greet(){ const h = new Date().getHours(); return h<11?'Selamat pagi':h<15?'Selamat siang':h<18?'Selamat sore':'Selamat malam'; }
+function renderNav(){
+  const items = PAGES.filter(p => !p.admin || isAdmin());
+  $('#nav').innerHTML = items.map(p => `<button data-act="go" data-p="${p.id}" class="${UI.page===p.id?'on':''}"><span class="ic">${p.ic}</span>${p.name}</button>`).join('');
+  const mob = ['home','port','signal','news'];
+  $('#bnav').innerHTML = mob.map(id => {const p=PAGES.find(x=>x.id===id); return `<button data-act="go" data-p="${id}" class="${UI.page===id?'on':''}"><span class="ic">${p.ic}</span>${p.name}</button>`}).join('') + `<button data-act="sheet" class="${mob.includes(UI.page)?'':'on'}"><span class="ic">⋯</span>Lainnya</button>`;
+  $('#sheet').innerHTML = items.filter(p=>!mob.includes(p.id)).map(p=>`<button data-act="go" data-p="${p.id}"><span class="ic">${p.ic}</span>${p.name}</button>`).join('') + `<button data-act="logout"><span class="ic">⎋</span>Keluar</button>`;
+  const u = me();
+  $('#me-av').textContent = u.name[0]; $('#me-name').textContent = u.name;
+  $('#me-role').textContent = `${u.role[0].toUpperCase()+u.role.slice(1)} · ${u.end ? 's/d ' + fmtDate(u.end) : 'Akses unlimited'}`;
+}
+function freshBadge(){
+  const f = S.products.find(p=>p.fail && p.active);
+  return f ? `<span class="badge b-late" data-act="explain" data-k="fresh" style="cursor:pointer"><span class="dot"></span>${f.name} terlambat · lainnya 09:15</span>`
+           : `<span class="badge b-fresh" data-act="explain" data-k="fresh" style="cursor:pointer"><span class="dot"></span>Harga diperbarui 09:15 WIB</span>`;
+}
+
+/* ---------------- PAGES ---------------- */
+function pageHome(){
+  const p = portfolio(), r = refProd(), {score} = factors('fisik'), sg = signalOf(score);
+  const goals = S.goals[S.session] || [];
+  const catChips = Object.entries(p.byCat).map(([k,v]) => `<span>${CATS[k][0]} ${CATS[k][1]} ${gr(v)}</span>`).join('');
+  const prices = [
+    {t:'Emas dunia (XAU/USD)',v:'$' + MKT.xau.toLocaleString('id-ID',{minimumFractionDigits:2}),c:MKT.xauChg,s:'per troy ounce',k:'xau',b:'b-fresh',bl:'Fresh'},
+    {t:`${r.name} · harga jual`,v:rp(r.sell),c:MKT.antamChg,s:`per gram · ${r.upd||'-'}`,k:'sell',a:r.id,b:r.fail?'b-late':'b-fresh',bl:r.fail?'Terlambat':'Fresh'},
+    {t:`${r.name} · buyback`,v:rp(r.bb),c:MKT.bbChg,s:`spread ${pc(spreadOf(r))}`,k:'spread',a:r.id,b:r.fail?'b-late':'b-fresh',bl:r.fail?'Terlambat':'Fresh'},
+    {t:'Kurs USD/IDR',v:MKT.fx.toLocaleString('id-ID'),c:MKT.fxChg,s:'kurs tengah · kemarin',k:'fx',b:'b-late',bl:'Terlambat'}
+  ];
+  return `
+  <div class="grid g3">
+    <div class="hero">
+      <div class="lbl">Nilai likuidasi aset emas ${Q('liq')}</div>
+      <div class="big num money">${rp(p.liq)}</div>
+      <span class="pill">${arrow(p.pl)} ${pc(Math.abs(p.plPct))} dari modal</span> ${Q('pl')}
+      ${PL('liq')}
+      <div class="row">
+        <div><small>Total emas ${Q('gram')}</small><b class="num">${gr(p.gram)}</b></div>
+        <div><small>Nilai pasar ${Q('mkt')}</small><b class="num money">${rp(p.mkt)}</b></div>
+        <div><small>Modal ${Q('cost')}</small><b class="num money">${rp(p.cost)}</b></div>
+      </div>
+      <div class="chips">${catChips || '<span>Belum ada emas tercatat</span>'}</div>
+    </div>
+    <div class="card">
+      <h3>Sinyal emas fisik <span class="badge b-fresh"><span class="dot"></span>Fresh</span></h3>
+      <div class="sig mt">
+        <svg class="gauge" viewBox="0 0 120 80">${gaugeSvg(score)}</svg>
+        <div><span class="sigtag ${sg[1]}">${sg[0]}</span><div class="sub mt8">Skor ${score>0?'+':''}${score} ${Q('score')} · horizon 3–6 bulan</div></div>
+      </div>
+      <p style="font-size:13px;margin:10px 0">${rationale('fisik')}</p>
+      ${PL('score')}
+      <button class="link mt8" data-act="go" data-p="signal">Lihat alasan lengkap →</button>
+    </div>
+  </div>
+
+  <div class="grid g4 mt">${prices.map(x=>`
+    <div class="card price"><div class="t"><span>${x.t} ${Q(x.k,x.a||'')}</span><span class="badge ${x.b}" style="padding:2px 8px"><span class="dot"></span>${x.bl}</span></div>
+    <div class="v num">${x.v}</div><span class="chg ${x.c>=0?'up':'dn'}">${arrow(x.c)} ${pc(Math.abs(x.c))}</span> <span class="sub">${x.s}</span>${PL(x.k,x.a||'')}</div>`).join('')}
+  </div>
+
+  <div class="grid g3 mt">
+    <div class="card">
+      <h3>Harga emas
+        <div class="seg">${[['spot','Spot /g'],...S.products.filter(x=>x.active&&x.method==='scrape').map(x=>[x.id,x.name])].map(([k,n])=>`<button data-act="src" data-v="${k}" class="${UI.src===k?'on':''}">${n}</button>`).join('')}</div>
+      </h3>
+      <div class="sub" id="chart-sub"></div>
+      <div style="display:flex;justify-content:flex-end;margin-top:8px"><div class="seg">${[[30,'30H'],[90,'90H'],[365,'1T']].map(([k,n])=>`<button data-act="range" data-v="${k}" class="${UI.range==k?'on':''}">${n}</button>`).join('')}</div></div>
+      <div class="chartwrap"><svg id="chart" viewBox="0 0 700 240" width="100%"></svg><div class="tip" id="tip"></div></div>
+    </div>
+    <div class="card">
+      <h3>Tujuan saya ${canEdit()?'<button class="btn btn-g btn-s" data-act="goal-add">+ Tambah</button>':''}</h3>
+      <div class="sub">Progress dihitung otomatis dari portofoliomu</div>
+      ${goals.length ? goals.map(goalRow).join('') : `<div class="box">Belum ada tujuan. ${canEdit()?'<button class="link" data-act="goal-add">Buat tujuan pertama →</button>':''}</div>`}
+    </div>
+  </div>
+
+  <div class="grid g2 mt">
+    <div class="card"><h3>Berita pilihan untukmu <button class="link" data-act="go" data-p="news">Semua →</button></h3>${newsList().slice(0,3).map(n=>newsRow(n)).join('') || '<div class="sub mt">Tidak ada berita di kategori yang kamu ikuti.</div>'}</div>
+    <div class="card">
+      <h3>Ringkasan Telegram ${P().digest?`<span class="badge b-info">${P().digestTime} WIB</span>`:'<span class="badge b-stale">Nonaktif</span>'}</h3>
+      <div class="sub">Pratinjau pesan — isinya mengikuti pengaturanmu</div>
+      <div class="box" style="font-family:ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.6;background:#F3ECF6">${esc(digestText()).replace(/\n/g,'<br>')}</div>
+      <div class="mfoot" style="margin-top:12px"><button class="btn btn-g btn-s" data-act="go" data-p="settings" data-tab="notif">Atur notifikasi</button><button class="btn btn-p btn-s" data-act="tg-test">Kirim tes</button></div>
+    </div>
+  </div>`;
+}
+function goalRow(g){
+  const p = portfolio(); const cur = g.type==='gram' ? p.gram : p.liq; const pct = Math.min(100, cur / g.target * 100);
+  const left = g.type==='gram' ? `${gr(p.gram)} / ${gr(g.target)}` : `<span class="money">${rpS(p.liq)}</span> / ${rpS(g.target)}`;
+  return `<div class="goal"><div class="h"><span>${esc(g.icon)} ${esc(g.name)}</span><span style="display:flex;align-items:center;gap:6px">${pct.toFixed(0)}%${canEdit()?`<span class="mini"><button data-act="goal-edit" data-id="${g.id}" title="Ubah">✎</button><button data-act="goal-del" data-id="${g.id}" title="Hapus">🗑</button></span>`:''}</span></div>
+  <div class="bar"><i style="width:${pct}%"></i></div><small>${left}${g.deadline?' · target '+fmtDate(g.deadline):''}${g.dca?' · DCA '+rpS(g.dca)+'/bulan':''}</small></div>`;
+}
+function digestText(){
+  const r = refProd(), {score} = factors('fisik'), p = portfolio();
+  let t = `✨ Gold Tracker · ${TODAY.toLocaleDateString('id-ID',{day:'numeric',month:'short'})}\n${r.name}: ${rp(r.sell)}/g (${arrow(MKT.antamChg)}${pc(Math.abs(MKT.antamChg))})\nBuyback: ${rp(r.bb)}/g · spread ${pc(spreadOf(r))}\nSinyal fisik: ${signalOf(score)[0]} (${score>0?'+':''}${score})\nAsetmu: ${P().priv?'Rp •••':rpS(p.liq)}`;
+  if (P().plain) t += `\n💬 ${ex('spread').replace(/<[^>]+>/g,'').split('. ')[0]}.`;
+  newsList(true).slice(0,2).forEach(n => t += `\n📰 ${n.title.slice(0,46)}…`);
+  return t + '\n→ Buka dashboard';
+}
+
+/* --- Portfolio --- */
+function pagePort(){
+  const p = portfolio(); const sum = Object.values(p.byCat).reduce((a,b)=>a+b,0) || 1;
+  const colors = {bar:C.plum,dig:C.mauve,jew:C.peach,coin:C.gold};
+  let off = 0; const R = 60, L = 2*Math.PI*R;
+  const arcs = Object.entries(p.byCat).map(([k,v]) => {const len=v/sum*L; const s=`<circle cx="80" cy="80" r="${R}" fill="none" stroke="${colors[k]}" stroke-width="22" stroke-dasharray="${len} ${L-len}" stroke-dashoffset="${-off}" transform="rotate(-90 80 80)"/>`; off+=len; return s;}).join('');
+  return `
+  ${!canEdit()?'<div class="ro">👁 Akunmu berperan <b>Viewer</b> — hanya dapat melihat, tidak dapat menambah atau mengubah data.</div>':''}
+  <div class="grid g3">
+    <div class="card">
+      <h3>Kepemilikan emas — ${esc(me().name)} ${canEdit()?'<button class="btn btn-p" data-act="hold-add">+ Tambah emas</button>':''}</h3>
+      <div class="sub">Nilai memakai harga buyback/jual-kembali tiap produk ${Q('liq')}</div>
+      <div class="hold hhead"><span></span><span>Produk</span><span class="r">Jumlah</span><span class="r hm">Nilai likuidasi</span><span class="r hm">Untung/rugi</span><span></span></div>
+      ${p.H.length ? p.H.map(h => {const pr=prod(h.pid)||{cat:'bar',name:'(produk dihapus)'}; const v=valueOf(h); const pl=h.cost?(v.liq/h.cost-1)*100:0;
+        return `<div class="hold"><div class="nimg">${CATS[pr.cat][0]}</div>
+        <div><b>${esc(pr.name)}${h.karat?` · ${h.karat}K`:''}</b><small>${esc(h.note||CATS[pr.cat][1])} · beli ${fmtDate(h.date)}</small></div>
+        <div class="r num"><b>${pr.cat==='rel'?h.gram.toLocaleString('id-ID')+' unit':gr(h.gram)}</b></div>
+        <div class="r num hm"><b class="money">${rp(v.liq)}</b></div>
+        <div class="r hm"><span class="chg ${pl>=0?'up':'dn'}">${arrow(pl)} ${pc(Math.abs(pl))}</span></div>
+        <div class="mini" style="justify-content:flex-end">${canEdit()?`<button data-act="hold-edit" data-id="${h.id}" title="Ubah">✎</button><button data-act="hold-del" data-id="${h.id}" title="Hapus">🗑</button>`:''}</div></div>`}).join('')
+      : `<div class="box">Belum ada emas tercatat. ${canEdit()?'<button class="link" data-act="hold-add">Tambah emas pertama →</button>':''}</div>`}
+      ${PL('pl')}
+    </div>
+    <div class="card">
+      <h3>Komposisi</h3>
+      <svg viewBox="0 0 160 160" width="70%" style="display:block;margin:12px auto">${arcs}<text x="80" y="76" text-anchor="middle" font-size="18" font-weight="800" fill="${C.plum}">${p.gram.toLocaleString('id-ID',{maximumFractionDigits:1})}</text><text x="80" y="94" text-anchor="middle" font-size="11" fill="#9A889E">gram</text></svg>
+      <div class="legend">${Object.entries(p.byCat).map(([k,v])=>`<div><i style="background:${colors[k]}"></i>${CATS[k][1]}<span>${(v/sum*100).toFixed(0)}%</span></div>`).join('')}</div>
+      <div class="box"><b>Konversi cepat</b> ${Q('gram')}<br>${gr(p.gram)} = ${(p.gram/31.1034768).toLocaleString('id-ID',{maximumFractionDigits:3})} troy oz<br>Setara spot: <span class="money">${rp(p.gram*SPOT_G())}</span> ${Q('spot')}</div>
+      <div class="box"><b>Harga acuan perhiasan/koin:</b> ${refProd().name} ${Q('karat')}<br><button class="link" data-act="go" data-p="settings" data-tab="profil">Ubah acuan →</button></div>
+    </div>
+  </div>`;
+}
+
+/* --- Signal --- */
+function pageSignal(){
+  const {F, score} = factors(UI.ctx), sg = signalOf(score);
+  return `
+  <div class="seg" style="margin-bottom:14px">${[['fisik','Emas fisik'],['spot','Spot (arah pasar)']].map(([k,n])=>`<button data-act="ctx" data-v="${k}" class="${UI.ctx===k?'on':''}">${n}</button>`).join('')}</div>
+  <div class="grid g3">
+    <div class="card">
+      <h3>Mengapa sinyalnya begini? <span class="sub">parameter dari Pengaturan › Analisis${isAdmin()?' · <button class="link" data-act="go" data-p="settings" data-tab="ana">ubah</button>':''}</span></h3>
+      ${F.map(f=>{const w=Math.abs(f.s)/2*50, left=f.s>=0?50:50-w, col=f.s>0?C.up:f.s<0?C.down:'#E0B04A';
+        return `<div class="fac"><div><b>${f.name} ${Q(f.m)}</b><small>${f.raw}<br>bobot ${f.wp.toFixed(0)}%</small></div><div class="dv"><i style="left:${left}%;width:${Math.max(w,2)}%;background:${col}"></i></div><div class="sc" style="color:${col}">${f.s>0?'+':''}${f.s}</div><div class="why">💬 ${ex(f.m)}</div></div>`}).join('')}
+    </div>
+    <div class="card">
+      <div style="text-align:center"><svg viewBox="0 0 120 80" width="180">${gaugeSvg(score)}</svg>
+      <div><span class="sigtag ${sg[1]}">${sg[0]}</span></div><div class="sub mt8">Skor ${score>0?'+':''}${score} dari −100 s/d +100 ${Q('score')}</div></div>
+      ${PL('score')}
+      <div class="box"><b>Dievaluasi ulang bila:</b><ul style="margin:6px 0 0 18px">${invalidation(UI.ctx).map(i=>`<li>${i}</li>`).join('')}</ul></div>
+      <div class="box"><b>Backtest 5 tahun (contoh)</b> ${Q('backtest')}<br>Ikuti sinyal: <b>+138%</b> · Nabung rutin: <b>+129%</b> ${Q('dca')}<br>Penurunan terdalam: −14% vs −17% ${Q('drawdown')}<br><span class="badge b-late mt8">Eksperimental — selisih belum signifikan</span></div>
+      <div class="disc">Ini alat bantu analisis, bukan nasihat keuangan. Keputusan tetap di tanganmu.</div>
+    </div>
+  </div>`;
+}
+
+/* --- News --- */
+const NEWS = [
+  {ic:'🏦',title:'Bank sentral dunia tambah cadangan emas kuartal III',src:'World Gold Council',time:'2 jam lalu',cat:'Bank sentral',imp:'bull',fact:'Pembelian emas oleh bank sentral naik dibanding kuartal sebelumnya.',inf:'Permintaan jangka panjang yang stabil cenderung menopang harga.'},
+  {ic:'🇺🇸',title:'The Fed sinyalkan jeda kenaikan suku bunga',src:'Media ekonomi global',time:'5 jam lalu',cat:'Moneter',imp:'bull',fact:'Pejabat bank sentral AS menyebut kebijakan sudah cukup ketat.',inf:'Suku bunga yang tidak naik membuat emas (tanpa bunga) lebih menarik.'},
+  {ic:'⛏️',title:'Antam laporkan kenaikan penjualan emas',src:'Keterbukaan informasi IDX',time:'Kemarin',cat:'Perusahaan',imp:'neu',fact:'Volume penjualan emas naik dibanding tahun lalu.',inf:'Relevan untuk ketersediaan stok di butik Logam Mulia.'},
+  {ic:'🌍',title:'Ketegangan geopolitik mereda setelah perundingan',src:'Media internasional',time:'Kemarin',cat:'Geopolitik',imp:'bear',fact:'Kedua pihak sepakat melanjutkan dialog.',inf:'Saat dunia lebih tenang, minat "aset aman" seperti emas bisa turun sementara.'},
+  {ic:'🇮🇩',title:'Rupiah menguat tipis terhadap dolar AS',src:'Media ekonomi nasional',time:'Kemarin',cat:'Indonesia',imp:'bear',fact:'Rupiah ditutup menguat terhadap USD.',inf:'Rupiah kuat membuat harga emas dalam rupiah sedikit lebih murah.'},
+  {ic:'💍',title:'Permintaan perhiasan emas meningkat jelang akhir tahun',src:'Media ritel',time:'2 hari lalu',cat:'Ritel emas',imp:'neu',fact:'Toko perhiasan melaporkan kenaikan kunjungan.',inf:'Dampak ke harga kecil; lebih relevan untuk harga jual perhiasan.'}
+];
+/* Di produksi: url = link asli artikel dari RSS. Mockup: membuka pencarian judul di Google News. */
+const newsUrl = n => n.url || ('https://news.google.com/search?q=' + encodeURIComponent(n.title) + '&hl=id&gl=ID&ceid=ID:id');
+const IMP = {bull:['Positif untuk emas','bull'],bear:['Negatif untuk emas','bear'],neu:['Netral','neu']};
+function newsList(ignoreFilter){ return NEWS.filter(n => P().news.includes(n.cat) && (ignoreFilter || UI.page!=='news' || UI.newsCat==='Semua' || n.cat===UI.newsCat)); }
+function newsRow(n){
+  return `<div class="news"><div class="nimg">${n.ic}</div><div><h4><a href="${newsUrl(n)}" target="_blank" rel="noopener">${esc(n.title)} ↗</a></h4><div class="meta">${n.src} · ${n.time} · <span class="imp ${IMP[n.imp][1]}">${IMP[n.imp][0]}</span> ${n.cat}</div></div></div>`;
+}
+const COS = [['ANTM','Aneka Tambang','ANTM.JK',3.2],['MDKA','Merdeka Copper Gold','MDKA.JK',1.1],['BRMS','Bumi Resources Minerals','BRMS.JK',-.8],['HRTA','Hartadinata Abadi','HRTA.JK',2.4],['NEM','Newmont','NEM',1.9],['B','Barrick Mining','B',-.4]];
+function pageNews(){
+  if (UI.newsCat!=='Semua' && !P().news.includes(UI.newsCat)) UI.newsCat='Semua';
+  const list = newsList();
+  return `
+  <div class="card"><h3>Perusahaan emas <span class="sub">perubahan harga saham 1 minggu (contoh) · klik untuk detail ↗</span></h3>
+    <div class="cos mt">${COS.map(c=>`<a class="co" href="https://finance.yahoo.com/quote/${c[2]}" target="_blank" rel="noopener"><b>${c[0]}</b><small>${c[1]}</small><span class="chg ${c[3]>=0?'up':'dn'}">${arrow(c[3])} ${pc(Math.abs(c[3]))}</span></a>`).join('')}</div></div>
+  <div class="filters mt">${['Semua',...P().news].map(c=>`<button data-act="ncat" data-v="${c}" class="${UI.newsCat===c?'on':''}">${c}</button>`).join('')}<button data-act="go" data-p="settings" data-tab="notif" style="border-style:dashed">⚙ Atur kategori</button></div>
+  <div class="grid g2">${list.map(n=>`<div class="card ncard"><div style="display:flex;gap:12px"><div class="nimg">${n.ic}</div><div style="min-width:0">
+    <h4><a href="${newsUrl(n)}" target="_blank" rel="noopener">${esc(n.title)} ↗</a></h4>
+    <div class="meta">${n.src} · ${n.time} · <span class="imp ${IMP[n.imp][1]}">${IMP[n.imp][0]}</span> ${n.cat}</div>
+    <div class="fact"><b>Faktanya:</b> ${n.fact}</div><div class="infer"><b>Artinya untuk emas (perkiraan):</b> ${n.inf}</div>
+    <a class="link" style="display:inline-block;margin-top:8px" href="${newsUrl(n)}" target="_blank" rel="noopener">Baca di sumber ↗</a></div></div></div>`).join('') || '<div class="card sub">Belum ada berita di kategori ini.</div>'}</div>
+  <div class="sub mt">Ringkasan ${S.sys.aiSummary?'dibuat AI (opsional) lalu dicek aturan kata kunci':'dibuat dari aturan kata kunci (AI nonaktif)'} · isi lengkap ada di situs sumber.</div>`;
+}
+
+/* --- Projection --- */
+let PJ = {amt:2000000, mon:36, ret:8};
+function projCalc(){
+  const r = refProd(), p0 = r.sell, sp = spreadOf(r)/100, sig = .15, ret = PJ.ret/100;
+  let g = 0; const path=[];
+  for (let m=0;m<PJ.mon;m++){ g += PJ.amt / (p0*Math.pow(1+ret,m/12)); path.push(g); }
+  const val = (m,z) => { const t=Math.max(m,1)/12; return path[m-1] * p0*(1-sp)*Math.pow(1+ret,t)*Math.exp(z*sig*Math.sqrt(t)); };
+  const A={p10:[],p50:[],p90:[],inp:[]};
+  for (let m=1;m<=PJ.mon;m++){A.p10.push(val(m,-1.2816));A.p50.push(val(m,0));A.p90.push(val(m,1.2816));A.inp.push(PJ.amt*m);}
+  return {g, A, p10:A.p10.at(-1), p50:A.p50.at(-1), p90:A.p90.at(-1), inp:PJ.amt*PJ.mon};
+}
+function pageProj(){
+  return `
+  <div class="grid g3">
+    <div class="card">
+      <h3>Simulasi nabung emas ${Q('dca')}</h3>
+      <div class="sub">Rentang hasil dari simulasi naik-turun harga historis — bukan ramalan pasti</div>
+      <svg id="fan" viewBox="0 0 700 240" width="100%" style="margin-top:12px"></svg>
+      <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:8px">
+        <div class="kpi"><small>Pesimis ${Q('proj')}</small><b class="num" id="k10"></b></div>
+        <div class="kpi" style="background:#FFF1DA"><small>Paling mungkin</small><b class="num" id="k50"></b></div>
+        <div class="kpi"><small>Optimis</small><b class="num" id="k90"></b></div>
+      </div>
+      <div class="plain" id="pj-plain"></div>
+    </div>
+    <div class="card">
+      <h3>Atur simulasi</h3>
+      <div class="field"><label>Setoran per bulan <span id="v-amt"></span></label><input type="range" data-pj="amt" min="500000" max="10000000" step="250000" value="${PJ.amt}"></div>
+      <div class="field"><label>Lama menabung <span id="v-mon"></span></label><input type="range" data-pj="mon" min="6" max="120" step="6" value="${PJ.mon}"></div>
+      <div class="field"><label>Asumsi kenaikan harga/tahun <span id="v-ret"></span></label><input type="range" data-pj="ret" min="0" max="15" step="1" value="${PJ.ret}"><div class="hint">Ubah sesuai keyakinanmu; di produksi default diambil dari rata-rata historis.</div></div>
+      <div class="box"><b>Hasil (paling mungkin)</b><br>Emas terkumpul: <b id="o-gram"></b><br>Total setoran: <span id="o-in"></span><br><span class="sub">Harga awal ${refProd().name} ${rp(refProd().sell)}/g · spread ${pc(spreadOf(refProd()))} diperhitungkan</span></div>
+      ${canEdit()?'<button class="btn btn-a mt" style="width:100%" data-act="pj-goal">Jadikan tujuan ✨</button>':''}
+    </div>
+  </div>`;
+}
+function drawProj(){
+  if (!$('#fan')) return;
+  const r = projCalc(), A = r.A, mon = PJ.mon;
+  $('#v-amt').textContent = rpS(PJ.amt); $('#v-mon').textContent = mon + ' bulan'; $('#v-ret').textContent = PJ.ret + '%';
+  $('#k10').textContent = rpS(r.p10); $('#k50').textContent = rpS(r.p50); $('#k90').textContent = rpS(r.p90);
+  $('#o-gram').textContent = gr(r.g); $('#o-in').textContent = rpS(r.inp);
+  $('#pj-plain').innerHTML = '💬 ' + ex('proj');
+  const W=700,H=240,mx=r.p90*1.05,x=i=>20+i*(W-40)/Math.max(mon-1,1),y=v=>H-24-v/mx*(H-40);
+  const line=a=>a.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+  const band=line(A.p90)+' '+A.p10.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`).reverse().join(' ');
+  $('#fan').innerHTML=`<line x1="20" x2="${W-20}" y1="${H-24}" y2="${H-24}" stroke="#EEDFD3"/><polygon points="${band}" fill="${C.gold}" opacity=".45"/>
+   <polyline points="${line(A.inp)}" fill="none" stroke="#B8A6BC" stroke-width="2" stroke-dasharray="5 4"/><polyline points="${line(A.p50)}" fill="none" stroke="${C.plum}" stroke-width="3"/>
+   <text x="30" y="24" font-size="11" fill="${C.plum}" font-weight="700">━ Paling mungkin</text><text x="150" y="24" font-size="11" fill="#9A889E">┅ Total setoran</text><text x="260" y="24" font-size="11" fill="#B88A2E">▇ Rentang wajar</text>
+   <text x="20" y="${H-6}" font-size="10" fill="#9A889E">Bulan 1</text><text x="${W-20}" y="${H-6}" text-anchor="end" font-size="10" fill="#9A889E">Bulan ${mon}</text>`;
+}
+
+/* --- Settings --- */
+const sw = (bind, on) => `<label class="sw"><input type="checkbox" data-bind="${bind}" ${on?'checked':''}><i></i></label>`;
+function pageSettings(){
+  const tabs = [['profil','Profil & tampilan'],['notif','Notifikasi & berita']];
+  if (isAdmin()) tabs.push(['ana','Analisis (sistem)'],['prod','Produk & harga (sistem)'],['src','Sumber & jadwal (sistem)']);
+  if (!tabs.find(t=>t[0]===UI.setTab)) UI.setTab = 'profil';
+  return `<div class="tabs">${tabs.map(([k,n])=>`<button data-act="settab" data-v="${k}" class="${UI.setTab===k?'on':''}">${n}</button>`).join('')}</div>${({profil:setProfil,notif:setNotif,ana:setAna,prod:setProd,src:setSrc})[UI.setTab]()}`;
+}
+function setProfil(){
+  const p = P(), u = me();
+  return `<div class="grid g2">
+  <div class="card"><h3>Profil</h3>
+    <div class="field"><label>Nama tampilan</label><input class="in" data-bind="user.name" value="${esc(u.name)}"></div>
+    <div class="field"><label>Email</label><input class="in" value="${esc(u.email)}" disabled><div class="hint">Email login hanya dapat diubah admin.</div></div>
+    <div class="field"><label>Masa akses</label><div class="box" style="margin-top:6px">${u.end?'Berlaku sampai <b>'+fmtDate(u.end)+'</b>':'<b>Unlimited</b>'} · role <b>${u.role}</b></div></div>
+  </div>
+  <div class="card"><h3>Tampilan & perhitungan</h3>
+    <div class="trow"><div><b>Bahasa sederhana</b><span class="sub">Tampilkan penjelasan mudah di bawah setiap angka</span></div>${sw('pref.plain',p.plain)}</div>
+    <div class="trow"><div><b>Mode privasi saat dibuka</b><span class="sub">Nominal disembunyikan sampai tombol 👁 ditekan</span></div>${sw('pref.priv',p.priv)}</div>
+    <div class="field"><label>Harga acuan perhiasan & koin ${Q('karat')}</label><select class="in" data-bind="pref.ref">${S.products.filter(x=>x.active&&(x.cat==='bar'||x.cat==='dig')).map(x=>`<option value="${x.id}" ${refProd().id===x.id?'selected':''}>${esc(x.name)} (buyback ${rp(x.bb)})</option>`).join('')}</select><div class="hint">Default sistem: ${esc(prod(S.sys.refProduct)?.name)}. Pilihanmu hanya berlaku untuk akunmu.</div></div>
+  </div></div>`;
+}
+function setNotif(){
+  const p = P(), u = me();
+  return `<div class="grid g2">
+  <div class="card"><h3>Telegram ${u.tg?'<span class="badge b-fresh">Terhubung</span>':'<span class="badge b-late">Belum terhubung</span>'}</h3>
+    ${u.tg?'<div class="box">Notifikasi dikirim ke akun Telegram yang terhubung. <button class="link" data-act="tg-unlink">Putuskan</button></div>':'<button class="btn btn-p mt" data-act="tg-link">Hubungkan Telegram</button>'}
+    <div class="trow mt"><div><b>Ringkasan harian</b><span class="sub">Harga, sinyal, dan berita teratas</span></div>${sw('pref.digest',p.digest)}</div>
+    <div class="field"><label>Jam kirim ringkasan</label><input class="in" type="time" data-bind="pref.digestTime" value="${p.digestTime}"></div>
+    <div class="f2"><div class="field"><label>Alert harga naik ≥ <span>${p.alertUp}%</span></label><input type="range" min="1" max="10" step="0.5" data-bind="pref.alertUp" value="${p.alertUp}"></div>
+    <div class="field"><label>Alert harga turun ≥ <span>${p.alertDown}%</span></label><input type="range" min="1" max="10" step="0.5" data-bind="pref.alertDown" value="${p.alertDown}"></div></div>
+    <div class="trow"><div><b>Alert saat sinyal berubah</b><span class="sub">Contoh: TAHAN → BELI BERTAHAP</span></div>${sw('pref.alertSignal',p.alertSignal)}</div>
+  </div>
+  <div class="card"><h3>Kategori berita yang diikuti</h3><div class="sub">Mengatur isi halaman Berita, beranda, dan ringkasan Telegram</div>
+    <div class="checks">${NEWS_CATS.map(c=>`<label><input type="checkbox" data-bind="pref.news" value="${c}" ${p.news.includes(c)?'checked':''}> ${c}</label>`).join('')}</div>
+    <div class="box"><b>Pratinjau ringkasan</b><div style="font-family:ui-monospace,Menlo,monospace;font-size:12px;margin-top:6px">${esc(digestText()).replace(/\n/g,'<br>')}</div></div>
+  </div></div>`;
+}
+function setAna(){
+  const a = S.ana, {score} = factors('fisik'), sg = signalOf(score);
+  const lbl = {trend:'Tren',mom:'Momentum (RSI)',macro:'Makro (dolar)',cost:'Biaya fisik (spread)',sent:'Sentimen berita',vol:'Volatilitas'};
+  const W = Object.values(a.w).reduce((x,y)=>x+y,0) || 1;
+  return `<div class="grid g3">
+  <div class="card"><h3>Bobot faktor <span class="sub">otomatis dinormalisasi ke 100%</span></h3>
+    ${Object.keys(a.w).map(k=>`<div class="field"><label>${lbl[k]} <span>${a.w[k]} → ${(a.w[k]/W*100).toFixed(0)}%</span></label><input type="range" min="0" max="50" data-bind="ana.w.${k}" value="${a.w[k]}"></div>`).join('')}
+    <h3 class="mt">Ambang indikator</h3>
+    <div class="f3">
+      <div class="field"><label>RSI jenuh beli ${Q('rsi')}</label><input class="in" type="number" data-bind="ana.rsiHigh" value="${a.rsiHigh}"></div>
+      <div class="field"><label>RSI jenuh jual</label><input class="in" type="number" data-bind="ana.rsiLow" value="${a.rsiLow}"></div>
+      <div class="field"><label>Batas spread (%) ${Q('spread')}</label><input class="in" type="number" step="0.5" data-bind="ana.spreadWarn" value="${a.spreadWarn}"></div>
+      <div class="field"><label>MA cepat (hari) ${Q('ma')}</label><input class="in" type="number" data-bind="ana.maFast" value="${a.maFast}"></div>
+      <div class="field"><label>MA lambat (hari)</label><input class="in" type="number" data-bind="ana.maSlow" value="${a.maSlow}"></div>
+    </div>
+    <h3 class="mt">Batas skor → sinyal</h3>
+    <div class="f2">${[['c1','Akumulasi jika ≥'],['c2','Beli bertahap jika ≥'],['c3','Tahan jika ≥'],['c4','Tunggu jika ≥']].map(([k,n])=>`<div class="field"><label>${n}</label><input class="in" type="number" data-bind="ana.cut.${k}" value="${a.cut[k]}"></div>`).join('')}</div>
+    <div class="hint">Di bawah batas "Tunggu" → Pertimbangkan jual. Di produksi setiap perubahan disimpan sebagai <b>rule_version</b> baru.</div>
+  </div>
+  <div class="card"><h3>Pratinjau langsung</h3><div class="sub">Sinyal emas fisik dengan parameter saat ini</div>
+    <div style="text-align:center;margin-top:10px"><svg viewBox="0 0 120 80" width="170">${gaugeSvg(score)}</svg><div><span class="sigtag ${sg[1]}">${sg[0]}</span></div><div class="sub mt8">Skor ${score>0?'+':''}${score}</div></div>
+    <div class="box">${rationale('fisik')}</div>
+    <button class="btn btn-g mt" style="width:100%" data-act="reset-ana">Kembalikan ke default</button>
+  </div></div>`;
+}
+function setProd(){
+  return `<div class="card"><h3>Produk & metode harga <button class="btn btn-p btn-s" data-act="prod-add">+ Tambah produk</button></h3>
+  <div class="sub">Metode: <b>scrape</b> = diambil otomatis dari situs · <b>manual</b> = diisi admin · <b>formula</b> = dihitung dari kadar × harga acuan</div>
+  <div style="overflow-x:auto"><table class="mt"><thead><tr><th>Aktif</th><th>Produk</th><th>Jenis</th><th>Metode</th><th>Harga jual/g</th><th>Buyback/g</th><th>Spread</th><th>Update</th><th></th></tr></thead><tbody>
+  ${S.products.map(p=>`<tr><td>${sw('prod.'+p.id+'.active',p.active)}</td><td><b>${esc(p.name)}</b>${p.fail?'<br><span class="badge b-late">gagal ambil</span>':''}</td><td>${CATS[p.cat][0]} ${CATS[p.cat][1]}</td>
+  <td>${p.method==='formula'?'formula':`<select class="in sm" data-bind="prod.${p.id}.method">${['scrape','manual'].map(m=>`<option ${p.method===m?'selected':''}>${m}</option>`).join('')}</select>`}</td>
+  ${p.method==='formula'?`<td colspan="3" class="sub">Potongan toko: <input class="in sm" style="width:64px;display:inline-block" type="number" data-bind="sys.${p.cat==='jew'?'jewCut':'coinCut'}" value="${p.cat==='jew'?S.sys.jewCut:S.sys.coinCut}">%</td>`
+   : p.cat==='rel'?`<td colspan="3"><input class="in sm" style="width:110px;display:inline-block" type="number" data-bind="prod.${p.id}.unitPrice" value="${p.unitPrice}"> <span class="sub">per unit</span></td>`
+   :`<td><input class="in sm num" type="number" data-bind="prod.${p.id}.sell" value="${p.sell}" ${p.method==='scrape'?'disabled title="Otomatis dari scraping; ubah metode ke manual untuk mengisi sendiri"':''}></td><td><input class="in sm num" type="number" data-bind="prod.${p.id}.bb" value="${p.bb}" ${p.method==='scrape'?'disabled':''}></td><td>${pc(spreadOf(p))}</td>`}
+  <td class="sub">${p.upd||'-'}</td><td>${p.method!=='formula'&&p.id!==S.sys.refProduct?`<button class="link" data-act="prod-del" data-id="${p.id}">Hapus</button>`:''}</td></tr>`).join('')}
+  </tbody></table></div>
+  <div class="field" style="max-width:360px"><label>Harga acuan default sistem</label><select class="in" data-bind="sys.refProduct">${S.products.filter(x=>x.cat==='bar'||x.cat==='dig').map(x=>`<option value="${x.id}" ${S.sys.refProduct===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div></div>`;
+}
+function setSrc(){
+  const s = S.sys, L = {xau:'Harga emas dunia (API)',fx:'Kurs USD/IDR (API)',antam:'Logam Mulia / Antam (scraping)',ubs:'UBS (scraping)',galeri24:'Galeri24 (scraping)',gnews:'Google News RSS',wgc:'World Gold Council RSS',idx:'Keterbukaan informasi IDX'};
+  return `<div class="grid g2">
+  <div class="card"><h3>Sumber data</h3>${Object.keys(L).map(k=>`<div class="trow"><div><b>${L[k]}</b></div>${sw('sys.sources.'+k,s.sources[k])}</div>`).join('')}
+    <div class="trow"><div><b>Ringkasan berita dengan AI</b><span class="sub">Jika nonaktif/gagal: pakai aturan kata kunci</span></div>${sw('sys.aiSummary',s.aiSummary)}</div></div>
+  <div class="card"><h3>Jadwal (WIB)</h3>
+    <div class="field"><label>Ambil harga</label><input class="in" data-bind="sys.schedPrices" value="${esc(s.schedPrices)}"><div class="hint">Pisahkan dengan koma. Disimpan ke konfigurasi; pemicu Cloudflare membaca nilai ini.</div></div>
+    <div class="field"><label>Ambil berita</label><input class="in" data-bind="sys.schedNews" value="${esc(s.schedNews)}"></div>
+    <div class="field"><label>Ringkasan Telegram default</label><input class="in" type="time" data-bind="sys.schedDigest" value="${s.schedDigest}"></div>
+    <div class="f2"><div class="field"><label>Spot basi setelah (jam) ${Q('fresh')}</label><input class="in" type="number" data-bind="sys.staleSpot" value="${s.staleSpot}"></div><div class="field"><label>Harga merek basi (jam)</label><input class="in" type="number" data-bind="sys.staleBrand" value="${s.staleBrand}"></div></div>
+    <button class="btn btn-d mt" data-act="reset-all">Reset seluruh data demo</button>
+  </div></div>`;
+}
+
+/* --- Admin --- */
+const JOBS = [
+  {id:'prices',name:'Ambil harga',last:'09:15 hari ini',st:'b-fresh',msg:'OK · 14 harga'},
+  {id:'news',name:'Ambil berita',last:'06:30 hari ini',st:'b-fresh',msg:'OK · 23 berita'},
+  {id:'analysis',name:'Analisis & sinyal',last:'17:20 kemarin',st:'b-fresh',msg:'OK · 2 sinyal'},
+  {id:'digest',name:'Ringkasan Telegram',last:'07:00 hari ini',st:'b-fresh',msg:'Terkirim · 2 user'},
+  {id:'galeri24',name:'Scraping Galeri24',last:'09:15 hari ini',st:'b-late',msg:'Gagal → pakai harga kemarin'}
+];
+function pageAdmin(){
+  return `<div class="grid g3">
+  <div class="card"><h3>Pengguna & masa akses <button class="btn btn-p btn-s" data-act="user-add">+ Undang</button></h3>
+    <div style="overflow-x:auto"><table><thead><tr><th>Nama</th><th>Role</th><th>Berlaku s/d</th><th>Status</th><th>Telegram</th><th></th></tr></thead><tbody>
+    ${S.users.map(u=>{const a=accessState(u); const soon=a.ok&&u.end&&(new Date(u.end)-TODAY)/864e5<14;
+      return `<tr><td><b>${esc(u.name)}</b><br><span class="sub">${esc(u.email)}</span></td><td><span class="role">${u.role}</span></td><td class="num">${fmtDate(u.end)}</td>
+      <td><span class="badge ${!a.ok?'b-stale':soon?'b-late':'b-fresh'}"><span class="dot"></span>${!a.ok?(u.status!=='active'?u.status:'Kedaluwarsa'):soon?'Segera berakhir':'Aktif'}</span></td>
+      <td>${u.tg?'✓':'–'}</td><td><button class="link" data-act="user-edit" data-id="${u.id}">Ubah</button></td></tr>`}).join('')}
+    </tbody></table></div>
+    <div class="hint mt8">Admin mengelola akses, tetapi tidak dapat membuka portofolio pengguna lain (dijaga aturan database).</div>
+  </div>
+  <div class="card"><h3>Job otomatis</h3><div class="sub">Dipantau watchdog tiap jam · gagal → alert Telegram admin</div>
+    ${JOBS.map(j=>`<div class="job"><div><b>${j.name}</b><div class="sub">${j.last}</div></div><div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span class="badge ${j.st}"><span class="dot"></span>${j.msg}</span>
+    ${j.st==='b-late'&&prod(j.id)?`<button class="btn btn-a btn-s" data-act="manual-price" data-id="${j.id}">Isi manual</button>`:''}<button class="btn btn-g btn-s" data-act="job-run" data-id="${j.id}">Jalankan</button></div></div>`).join('')}
+  </div></div>`;
+}
+
+/* ---------------- CHART & GAUGE ---------------- */
+function rng(seed){return()=>{seed=(seed*16807)%2147483647;return(seed-1)/2147483646}}
+function series(end,days,vol,seed){const r=rng(seed);const a=[end];for(let i=1;i<days;i++)a.unshift(a[0]/(1+(r()-.47)*vol));return a}
+function drawChart(){
+  const svg = $('#chart'); if (!svg) return;
+  const pr = prod(UI.src); if (UI.src!=='spot' && !pr) UI.src='spot';
+  const end = UI.src==='spot' ? SPOT_G() : pr.sell;
+  const d = series(end, 365, .017, UI.src.length*7+3).slice(-UI.range), W=700, H=240, P0=10;
+  const mn=Math.min(...d)*.995, mx=Math.max(...d)*1.005, x=i=>P0+i*(W-2*P0)/(d.length-1), y=v=>H-24-(v-mn)/(mx-mn)*(H-40);
+  const pts = d.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+  let grid=''; for(let k=0;k<4;k++){const gy=16+k*(H-40)/3, gv=mx-(k/3)*(mx-mn); grid+=`<line x1="0" x2="${W}" y1="${gy}" y2="${gy}" stroke="#F1E5DB"/><text x="${W-4}" y="${gy-4}" text-anchor="end" font-size="10" fill="#9A889E">${(gv/1e6).toFixed(2)} jt</text>`}
+  svg.innerHTML = `<defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${C.peach}" stop-opacity=".45"/><stop offset="1" stop-color="${C.gold}" stop-opacity="0"/></linearGradient></defs>${grid}
+  <polygon points="${P0},${H-24} ${pts} ${W-P0},${H-24}" fill="url(#ga)"/><polyline points="${pts}" fill="none" stroke="${C.mauve}" stroke-width="2.5" stroke-linejoin="round"/>
+  <line id="cx" y1="10" y2="${H-24}" stroke="${C.plum}" stroke-dasharray="3 3" opacity="0"/><circle id="cd" r="5" fill="${C.gold}" stroke="${C.plum}" stroke-width="2" opacity="0"/>`;
+  const chg = (d.at(-1)/d[0]-1)*100;
+  $('#chart-sub').innerHTML = `${UI.src==='spot'?'Spot per gram':esc(pr.name)+' · harga jual per gram'} · ${UI.range} hari terakhir <span class="chg ${chg>=0?'up':'dn'}">${arrow(chg)} ${pc(Math.abs(chg))}</span>` +
+    `<div class="plain">💬 Dalam ${UI.range} hari terakhir harga ${chg>=0?'naik':'turun'} ${pc(Math.abs(chg))}. Arahkan kursor atau ketuk grafik untuk melihat harga per tanggal.</div>`;
+  const move = e => { const b=svg.getBoundingClientRect(), cxp=(e.touches?e.touches[0].clientX:e.clientX); const i=Math.max(0,Math.min(d.length-1,Math.round(((cxp-b.left)/b.width*W-P0)/(W-2*P0)*(d.length-1))));
+    const cx=x(i), cy=y(d[i]); $('#cx').setAttribute('x1',cx); $('#cx').setAttribute('x2',cx); $('#cx').setAttribute('opacity',1); $('#cd').setAttribute('cx',cx); $('#cd').setAttribute('cy',cy); $('#cd').setAttribute('opacity',1);
+    const dt=new Date(TODAY.getTime()-(d.length-1-i)*864e5), t=$('#tip'); t.style.opacity=1; t.style.left=(cx/W*b.width)+'px'; t.style.top=(cy/H*b.height)+'px'; t.innerHTML=`${dt.toLocaleDateString('id-ID',{day:'numeric',month:'short'})} · <b>${rp(d[i])}</b>`; };
+  svg.onmousemove = move; svg.ontouchmove = move;
+  svg.onmouseleave = () => { $('#tip').style.opacity=0; $('#cx').setAttribute('opacity',0); $('#cd').setAttribute('opacity',0); };
+}
+function gaugeSvg(score){
+  const a=Math.PI*(1-(Math.max(-100,Math.min(100,score))+100)/200), cx=60, cy=62, r=48, nx=cx+r*.82*Math.cos(a), ny=cy-r*.82*Math.sin(a), id='g'+uid();
+  return `<defs><linearGradient id="${id}"><stop offset="0" stop-color="${C.down}"/><stop offset=".5" stop-color="${C.gold}"/><stop offset="1" stop-color="${C.up}"/></linearGradient></defs>
+  <path d="M12 62 A48 48 0 0 1 108 62" fill="none" stroke="url(#${id})" stroke-width="10" stroke-linecap="round"/>
+  <line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="${C.plum}" stroke-width="3" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="5" fill="${C.plum}"/>
+  <text x="12" y="77" font-size="7" fill="#9A889E" text-anchor="middle">Jual</text><text x="108" y="77" font-size="7" fill="#9A889E" text-anchor="middle">Beli</text>`;
+}
+
+/* ---------------- RENDER ---------------- */
+function render(){
+  $('#pop').classList.remove('on');
+  const u = me();
+  if (!u || !accessState(u).ok){ $('#login').style.display='grid'; renderLogin(); return; }
+  $('#login').style.display='none';
+  if (PAGES.find(p=>p.id===UI.page)?.admin && !isAdmin()) UI.page='home';
+  renderNav();
+  const pg = PAGES.find(p=>p.id===UI.page);
+  $('#title').textContent = UI.page==='home' ? `${greet()}, ${u.name} ✨` : pg.name;
+  $('#subtitle').textContent = pg.sub();
+  $('#fresh').innerHTML = freshBadge();
+  document.body.classList.toggle('plainmode', P().plain);
+  $('#btn-plain').style.background = P().plain ? '#F6EDF4' : '#fff';
+  $('#page').innerHTML = ({home:pageHome,port:pagePort,signal:pageSignal,news:pageNews,proj:pageProj,settings:pageSettings,admin:pageAdmin})[UI.page]();
+  if (UI.page==='home') drawChart();
+  if (UI.page==='proj') drawProj();
+  applyPriv();
+}
+function applyPriv(){
+  $('#btn-priv').textContent = UI.priv ? '🙈' : '👁';
+  document.querySelectorAll('.money').forEach(e => { if (e.dataset.orig === undefined) e.dataset.orig = e.textContent; e.textContent = UI.priv ? 'Rp •••••••' : e.dataset.orig; });
+}
+function renderLogin(){
+  $('#lg-acc').innerHTML = S.users.map(u => `<button class="acc" data-act="login-as" data-id="${u.id}"><div class="av">${esc(u.name[0])}</div><div><b>${esc(u.name)}</b> <span class="role">${u.role}</span><small>${esc(u.email)} · ${u.end?'s/d '+fmtDate(u.end):'unlimited'}</small></div></button>`).join('');
+}
+function toast(t){ const el=$('#toast'); el.textContent=t; el.classList.add('on'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('on'),2000); }
+
+/* ---------------- MODALS ---------------- */
+function modal(html){ $('#modal').innerHTML = html; $('#ov').classList.add('on'); }
+function closeModal(){ $('#ov').classList.remove('on'); }
+function holdForm(h){
+  const cat = h ? (prod(h.pid)?.cat || 'bar') : UI.addCat;
+  const list = S.products.filter(p=>p.active && p.cat===cat);
+  const sel = h ? h.pid : list[0]?.id;
+  const isK = cat==='jew' || cat==='coin';
+  modal(`<h2>${h?'Ubah':'Tambah'} emas</h2><div class="sub">Pilih jenis — form menyesuaikan</div>
+  <div class="cat">${Object.entries(CATS).map(([k,v])=>`<button data-act="hcat" data-v="${k}" class="${cat===k?'on':''}" ${h?'disabled':''}><span>${v[0]}</span>${v[1]}</button>`).join('')}</div>
+  <div class="field"><label>Produk / merek</label><select class="in" id="h-pid">${list.map(p=>`<option value="${p.id}" ${p.id===sel?'selected':''}>${esc(p.name)}</option>`).join('')}</select>
+  ${isAdmin()?'<div class="hint">Merek belum ada? Tambahkan di Pengaturan › Produk & harga.</div>':''}</div>
+  <div class="f2"><div class="field"><label>${cat==='rel'?'Jumlah unit':'Berat (gram)'}</label><input class="in num" id="h-gram" type="number" step="0.01" value="${h?h.gram:5}"></div>
+  <div class="field" style="${isK?'':'visibility:hidden'}"><label>Kadar ${Q('karat')}</label><select class="in" id="h-karat">${[24,23,22,20,18,17,16,10,9,8].map(k=>`<option ${(h?.karat||(cat==='coin'?22:18))==k?'selected':''}>${k}</option>`).join('')}</select></div></div>
+  <div class="f2"><div class="field"><label>Total harga beli (Rp)</label><input class="in num" id="h-cost" type="number" value="${h?h.cost:12000000}"></div>
+  <div class="field"><label>Tanggal beli</label><input class="in" id="h-date" type="date" value="${h?h.date:'2026-10-31'}"></div></div>
+  <div class="field"><label>Catatan (opsional)</label><input class="in" id="h-note" value="${esc(h?.note||'')}" placeholder="mis. 2 × 5 g, hadiah, toko X"></div>
+  <div class="est" id="h-est"></div>
+  <div class="mfoot"><button class="btn btn-g" data-act="close">Batal</button><button class="btn btn-p" data-act="hold-save" data-id="${h?h.id:''}">Simpan</button></div>`);
+  holdEst();
+}
+function holdDraft(){ return {pid:$('#h-pid').value, gram:+$('#h-gram').value||0, karat:+$('#h-karat').value, cost:+$('#h-cost').value||0, date:$('#h-date').value, note:$('#h-note').value}; }
+function holdEst(){
+  if (!$('#h-est')) return;
+  const d = holdDraft(); if (!d.pid){ $('#h-est').innerHTML='Belum ada produk aktif di jenis ini.'; return; }
+  const p = prod(d.pid); if (!(p.cat==='jew'||p.cat==='coin')) delete d.karat;
+  const v = valueOf(d), pl = d.cost ? (v.liq/d.cost-1)*100 : 0;
+  $('#h-est').innerHTML = `Perkiraan nilai likuidasi hari ini<br><b class="num">${rp(v.liq)}</b> <span class="chg ${pl>=0?'up':'dn'}">${arrow(pl)} ${pc(Math.abs(pl))}</span><br><span class="sub">Cara hitung: ${v.how}</span>`;
+}
+function goalForm(g){
+  modal(`<h2>${g&&g.id?'Ubah':'Tambah'} tujuan</h2><div class="sub">Progress dihitung otomatis dari portofoliomu</div>
+  <div class="f2"><div class="field"><label>Ikon</label><select class="in" id="g-icon">${['🎓','🛟','💍','🕋','🏠','✈️','👶','🎁','⭐'].map(i=>`<option ${g?.icon===i?'selected':''}>${i}</option>`).join('')}</select></div>
+  <div class="field"><label>Nama tujuan</label><input class="in" id="g-name" value="${esc(g?.name||'')}" placeholder="mis. Dana pendidikan"></div></div>
+  <div class="field"><label>Jenis target</label><div class="radio"><label><input type="radio" name="gt" value="gram" ${g?.type!=='idr'?'checked':''}> Gram emas</label><label><input type="radio" name="gt" value="idr" ${g?.type==='idr'?'checked':''}> Nilai rupiah</label></div></div>
+  <div class="f2"><div class="field"><label>Target</label><input class="in num" id="g-target" type="number" value="${g?.target||50}"></div>
+  <div class="field"><label>Tenggat (opsional)</label><input class="in" id="g-dl" type="date" value="${g?.deadline||''}"></div></div>
+  <div class="field"><label>Rencana nabung per bulan (opsional) ${Q('dca')}</label><input class="in num" id="g-dca" type="number" value="${g?.dca||0}"></div>
+  <div class="err" id="g-err"></div>
+  <div class="mfoot"><button class="btn btn-g" data-act="close">Batal</button><button class="btn btn-p" data-act="goal-save" data-id="${g?.id||''}">Simpan</button></div>`);
+}
+function userForm(u){
+  modal(`<h2>${u?'Ubah akses':'Undang pengguna'}</h2><div class="sub">${u?'Perubahan berlaku pada permintaan data berikutnya':'Hanya email yang diundang yang bisa masuk'}</div>
+  <div class="f2"><div class="field"><label>Nama</label><input class="in" id="u-name" value="${esc(u?.name||'')}"></div><div class="field"><label>Email</label><input class="in" id="u-email" value="${esc(u?.email||'')}" ${u?'disabled':''} placeholder="nama@email.com"></div></div>
+  <div class="f2"><div class="field"><label>Role</label><select class="in" id="u-role">${['user','viewer','admin'].map(r=>`<option ${u?.role===r?'selected':''}>${r}</option>`).join('')}</select></div>
+  <div class="field"><label>Status</label><select class="in" id="u-status">${['active','suspended','revoked'].map(s=>`<option ${(u?.status||'active')===s?'selected':''}>${s}</option>`).join('')}</select></div></div>
+  <div class="field"><label>Masa akses</label><div class="radio"><label><input type="radio" name="dur" value="date" ${!u||u.end!==null?'checked':''}> Sampai tanggal</label><label><input type="radio" name="dur" value="unl" ${u&&u.end===null?'checked':''}> Unlimited</label></div>
+  <input class="in" id="u-end" type="date" value="${u?.end||'2026-12-31'}"></div>
+  <div class="err" id="u-err"></div>
+  <div class="mfoot">${u&&u.id!==S.session?`<button class="btn btn-d" data-act="user-del" data-id="${u.id}" style="margin-right:auto">Hapus</button>`:''}<button class="btn btn-g" data-act="close">Batal</button><button class="btn btn-p" data-act="user-save" data-id="${u?u.id:''}">${u?'Simpan':'Kirim undangan'}</button></div>`);
+}
+function explainPop(btn){
+  const k = btn.dataset.k, e = EX[k]; if (!e) return;
+  const pop = $('#pop');
+  pop.innerHTML = `<h4>${e.t}<button data-act="pop-close" title="Tutup">✕</button></h4><div class="now">💬 ${ex(k, btn.dataset.arg)}</div><div class="def"><b>Istilah:</b> ${e.d}</div>`;
+  pop.classList.add('on');
+  const r = btn.getBoundingClientRect(), pw = pop.offsetWidth, ph = pop.offsetHeight;
+  const left = Math.min(window.innerWidth - pw - 12, Math.max(12, r.left - pw/2));
+  let top = r.bottom + 8; if (top + ph > window.innerHeight - 12) top = Math.max(12, r.top - ph - 8);
+  pop.style.left = left + 'px'; pop.style.top = top + 'px';
+}
+function confirmBox(msg, fn){ window._cf = fn; modal(`<h2>Konfirmasi</h2><p style="margin-top:8px">${msg}</p><div class="mfoot"><button class="btn btn-g" data-act="close">Batal</button><button class="btn btn-d" data-act="confirm-yes">Ya, lanjutkan</button></div>`); }
+
+/* ---------------- ACTIONS (semua tombol terdaftar di sini) ---------------- */
+const ACT = {
+  'login-as': el => { const u=S.users.find(x=>x.id===el.dataset.id); const a=accessState(u); const e=$('#lg-err'); if(!a.ok){ e.textContent=`${u.name}: ${a.why}`; e.style.display='block'; return; } e.style.display='none'; S.session=u.id; UI.page='home'; UI.priv=P().priv; save(); render(); toast(`Masuk sebagai ${u.name}`); },
+  'login-email': () => { const v=$('#lg-email').value.trim().toLowerCase(); const u=S.users.find(x=>x.email===v); const e=$('#lg-err'); e.style.display='block';
+      if(!u){ e.textContent='Email belum diundang admin. Link masuk tidak dikirim.'; return; } const a=accessState(u); if(!a.ok){ e.textContent=a.why; return; }
+      e.style.display='none'; toast(`(Simulasi) link masuk dikirim ke ${u.email}`); setTimeout(()=>ACT['login-as']({dataset:{id:u.id}}),900); },
+  'logout': () => { S.session=null; save(); $('#sheet').classList.remove('on'); render(); },
+  'go': el => { UI.page=el.dataset.p; if(el.dataset.tab) UI.setTab=el.dataset.tab; $('#sheet').classList.remove('on'); render(); window.scrollTo({top:0,behavior:'smooth'}); },
+  'sheet': () => $('#sheet').classList.toggle('on'),
+  'toggle-priv': () => { UI.priv=!UI.priv; applyPriv(); toast(UI.priv?'Mode privasi aktif':'Nominal ditampilkan'); },
+  'toggle-plain': () => { P().plain=!P().plain; save(); render(); toast(P().plain?'Bahasa sederhana aktif':'Bahasa sederhana disembunyikan'); },
+  'explain': el => explainPop(el),
+  'pop-close': () => $('#pop').classList.remove('on'),
+  'src': el => { UI.src=el.dataset.v; render(); },
+  'range': el => { UI.range=+el.dataset.v; render(); },
+  'ctx': el => { UI.ctx=el.dataset.v; render(); },
+  'ncat': el => { UI.newsCat=el.dataset.v; render(); },
+  'settab': el => { UI.setTab=el.dataset.v; render(); },
+  'close': closeModal,
+  'ov-close': (el, ev) => { if (ev.target.id==='ov') closeModal(); },
+  'hold-add': () => { UI.addCat='bar'; holdForm(null); },
+  'hcat': el => { UI.addCat=el.dataset.v; holdForm(null); },
+  'hold-edit': el => holdForm(S.hold[S.session].find(h=>h.id===el.dataset.id)),
+  'hold-save': el => { const d=holdDraft(); if(!d.pid||d.gram<=0){ toast('Lengkapi produk dan berat'); return; }
+      const p=prod(d.pid); if(!(p.cat==='jew'||p.cat==='coin')) delete d.karat;
+      const L=S.hold[S.session]=S.hold[S.session]||[]; if(el.dataset.id){ Object.assign(L.find(h=>h.id===el.dataset.id), d); } else L.push({id:uid(),...d});
+      save(); closeModal(); UI.page='port'; render(); toast('Emas tersimpan ✨'); },
+  'hold-del': el => confirmBox('Hapus catatan emas ini?', ()=>{ S.hold[S.session]=S.hold[S.session].filter(h=>h.id!==el.dataset.id); save(); render(); toast('Catatan dihapus'); }),
+  'goal-add': () => goalForm(null),
+  'goal-edit': el => goalForm(S.goals[S.session].find(g=>g.id===el.dataset.id)),
+  'goal-save': el => { const name=$('#g-name').value.trim(), target=+$('#g-target').value; if(!name||target<=0){ const e=$('#g-err'); e.textContent='Isi nama dan target lebih dari 0.'; e.style.display='block'; return; }
+      const g={icon:$('#g-icon').value,name,type:document.querySelector('input[name=gt]:checked').value,target,deadline:$('#g-dl').value,dca:+$('#g-dca').value||0};
+      const L=S.goals[S.session]=S.goals[S.session]||[]; if(el.dataset.id) Object.assign(L.find(x=>x.id===el.dataset.id), g); else L.push({id:uid(),...g});
+      save(); closeModal(); render(); toast('Tujuan tersimpan 🎯'); },
+  'goal-del': el => confirmBox('Hapus tujuan ini?', ()=>{ S.goals[S.session]=S.goals[S.session].filter(g=>g.id!==el.dataset.id); save(); render(); toast('Tujuan dihapus'); }),
+  'pj-goal': () => { const r=projCalc(); goalForm({id:'',icon:'⭐',name:'Target nabung emas',type:'gram',target:Math.round(r.g*10)/10,deadline:new Date(TODAY.getTime()+PJ.mon*30.4*864e5).toISOString().slice(0,10),dca:PJ.amt}); },
+  'tg-test': () => toast(me().tg ? 'Pesan tes dikirim ke Telegram (simulasi)' : 'Hubungkan Telegram dulu di Pengaturan › Notifikasi'),
+  'tg-link': () => { const code='GT-'+Math.floor(1000+Math.random()*9000); modal(`<h2>Hubungkan Telegram</h2><ol style="margin:12px 0 0 18px;font-size:13px;line-height:1.8"><li>Buka Telegram, cari bot milikmu (mis. <b>@GoldTrackerKu_bot</b>)</li><li>Kirim pesan: <b style="background:var(--gold);padding:2px 8px;border-radius:6px">/start ${code}</b></li><li>Kode berlaku 15 menit. Halaman ini akan terhubung otomatis.</li></ol><div class="mfoot"><button class="btn btn-g" data-act="close">Tutup</button><button class="btn btn-p" data-act="tg-done">Simulasikan terhubung</button></div>`); },
+  'tg-done': () => { me().tg=true; save(); closeModal(); render(); toast('Telegram terhubung ✓'); },
+  'tg-unlink': () => confirmBox('Putuskan Telegram? Kamu tidak akan menerima notifikasi.', ()=>{ me().tg=false; save(); render(); }),
+  'reset-ana': () => { S.ana=defaults().ana; save(); render(); toast('Parameter analisis kembali ke default'); },
+  'reset-all': () => confirmBox('Reset semua data demo ke awal?', ()=>{ const s=S.session; S=defaults(); S.session=s; save(); render(); toast('Data demo direset'); }),
+  'prod-add': () => modal(`<h2>Tambah produk</h2><div class="field"><label>Nama</label><input class="in" id="p-name" placeholder="mis. King Halim"></div>
+     <div class="f2"><div class="field"><label>Jenis</label><select class="in" id="p-cat">${Object.entries(CATS).filter(([k])=>k!=='jew'&&k!=='coin').map(([k,v])=>`<option value="${k}">${v[1]}</option>`).join('')}</select></div><div class="field"><label>Metode harga</label><select class="in" id="p-method"><option>manual</option><option>scrape</option></select></div></div>
+     <div class="f2"><div class="field"><label>Harga jual/g (atau per unit)</label><input class="in" id="p-sell" type="number" value="2400000"></div><div class="field"><label>Buyback/g</label><input class="in" id="p-bb" type="number" value="2280000"></div></div>
+     <div class="hint">Metode scrape butuh parser baru di job harga (dikerjakan developer); sementara harga bisa diisi manual.</div>
+     <div class="mfoot"><button class="btn btn-g" data-act="close">Batal</button><button class="btn btn-p" data-act="prod-save">Simpan</button></div>`),
+  'prod-save': () => { const name=$('#p-name').value.trim(); if(!name){ toast('Isi nama produk'); return; } const cat=$('#p-cat').value;
+      S.products.push({id:'p'+uid(),cat,name,method:$('#p-method').value,sell:+$('#p-sell').value,bb:+$('#p-bb').value,unitPrice:cat==='rel'?+$('#p-sell').value:undefined,active:true,upd:'baru'}); save(); closeModal(); render(); toast('Produk ditambahkan'); },
+  'prod-del': el => { const used=Object.values(S.hold).some(L=>L.some(h=>h.pid===el.dataset.id)); if(used){ toast('Produk dipakai di portofolio — nonaktifkan saja'); return; } confirmBox('Hapus produk ini?', ()=>{ S.products=S.products.filter(p=>p.id!==el.dataset.id); save(); render(); }); },
+  'user-add': () => userForm(null),
+  'user-edit': el => userForm(S.users.find(u=>u.id===el.dataset.id)),
+  'user-save': el => { const unl=document.querySelector('input[name=dur]:checked').value==='unl', name=$('#u-name').value.trim(), email=$('#u-email').value.trim().toLowerCase();
+      const data={name,role:$('#u-role').value,status:$('#u-status').value,end:unl?null:$('#u-end').value};
+      const err=$('#u-err'); const fail=m=>{err.textContent=m; err.style.display='block';};
+      if(!name||(!el.dataset.id&&!/^\S+@\S+\.\S+$/.test(email))) return fail('Isi nama dan email yang valid.');
+      if(el.dataset.id===S.session && (data.role!=='admin'||data.status!=='active')) return fail('Tidak bisa menurunkan role atau menonaktifkan akunmu sendiri.');
+      if(el.dataset.id) Object.assign(S.users.find(u=>u.id===el.dataset.id), data);
+      else { if(S.users.some(u=>u.email===email)) return fail('Email sudah terdaftar.'); const id='u'+uid(); S.users.push({id,email,tg:false,...data}); S.hold[id]=[]; S.goals[id]=[]; }
+      save(); closeModal(); render(); toast(el.dataset.id?'Akses diperbarui':'Undangan terkirim (simulasi)'); },
+  'user-del': el => confirmBox('Hapus pengguna ini beserta datanya?', ()=>{ S.users=S.users.filter(u=>u.id!==el.dataset.id); delete S.hold[el.dataset.id]; delete S.goals[el.dataset.id]; save(); render(); }),
+  'job-run': el => { const j=JOBS.find(x=>x.id===el.dataset.id); toast(`Menjalankan "${j.name}"…`); setTimeout(()=>{ j.last='baru saja'; if(j.id==='galeri24' && prod('galeri24')?.fail){ j.msg='Masih gagal → isi manual'; } else { j.st='b-fresh'; j.msg='OK'; } render(); toast(`"${j.name}" selesai`); },1200); },
+  'manual-price': el => { const p=prod(el.dataset.id); modal(`<h2>Isi harga manual · ${esc(p.name)}</h2><div class="sub">Dipakai sampai scraping berhasil lagi; diberi label sumber "manual"</div>
+     <div class="f2"><div class="field"><label>Harga jual/g</label><input class="in" id="m-sell" type="number" value="${p.sell}"></div><div class="field"><label>Buyback/g</label><input class="in" id="m-bb" type="number" value="${p.bb}"></div></div>
+     <div class="mfoot"><button class="btn btn-g" data-act="close">Batal</button><button class="btn btn-p" data-act="manual-save" data-id="${p.id}">Simpan</button></div>`); },
+  'manual-save': el => { const p=prod(el.dataset.id); p.sell=+$('#m-sell').value; p.bb=+$('#m-bb').value; p.fail=false; p.upd='manual · baru saja'; const j=JOBS.find(x=>x.id===p.id); if(j){j.st='b-fresh'; j.msg='Diisi manual';} save(); closeModal(); render(); toast('Harga manual tersimpan'); },
+  'confirm-yes': () => { const f=window._cf; closeModal(); f && f(); }
+};
+
+document.addEventListener('click', ev => {
+  const el = ev.target.closest('[data-act]');
+  if (!el) { if (!ev.target.closest('#pop')) $('#pop').classList.remove('on'); return; }
+  if (el.dataset.act !== 'explain' && !el.closest('#pop')) $('#pop').classList.remove('on');
+  const fn = ACT[el.dataset.act]; if (fn) fn(el, ev);
+});
+
+/* Bindings: semua input pengaturan */
+function setPath(path, val){
+  const [root, ...rest] = path.split('.');
+  if (root === 'pref'){ const p=P(); const k=rest[0]; if(k==='news'){ const set=new Set(p.news); val.checked?set.add(val.value):set.delete(val.value); p.news=NEWS_CATS.filter(c=>set.has(c)); } else p[k]=val.v; return; }
+  if (root === 'user'){ me()[rest[0]] = val.v; return; }
+  if (root === 'prod'){ const p=prod(rest[0]); p[rest[1]] = val.v; if(rest[1]==='method'&&val.v!=='scrape') p.fail=false; return; }
+  let o = S[root]; for (let i=0;i<rest.length-1;i++) o=o[rest[i]]; o[rest.at(-1)] = val.v;
+}
+function readVal(el){ if (el.type==='checkbox') return {v:el.checked}; if (el.type==='number'||el.type==='range') return {v:+el.value}; return {v:el.value}; }
+document.addEventListener('input', ev => {
+  const el = ev.target;
+  if (el.dataset.pj){ PJ[el.dataset.pj] = +el.value; drawProj(); return; }
+  if (el.closest('#modal') && ['h-gram','h-karat','h-cost','h-pid'].includes(el.id)) { holdEst(); return; }
+  if (el.dataset.bind && el.type==='range'){ setPath(el.dataset.bind, readVal(el)); const lab=el.parentElement.querySelector('label span'); if(lab) lab.textContent = el.dataset.bind.startsWith('ana.w') ? el.value : el.value+'%'; }
+});
+document.addEventListener('change', ev => {
+  const el = ev.target;
+  if (el.closest('#modal') && el.id==='h-pid') { holdEst(); return; }
+  if (!el.dataset.bind) return;
+  setPath(el.dataset.bind, el.dataset.bind==='pref.news' ? {checked:el.checked, value:el.value} : readVal(el));
+  if (el.dataset.bind==='pref.priv') UI.priv = el.checked;
+  save(); const y = window.scrollY; render(); window.scrollTo(0, y); toast('Pengaturan tersimpan');
+});
+document.addEventListener('keydown', ev => { if (ev.key==='Escape'){ closeModal(); $('#pop').classList.remove('on'); $('#sheet').classList.remove('on'); } if (ev.key==='Enter' && ev.target.id==='lg-email') ACT['login-email'](); });
+
+render();
+</script>
+</body>
+</html>

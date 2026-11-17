@@ -1,0 +1,16 @@
+# Rahasia
+.env
+.env.*
+!.env.example
+.dev.vars
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+probe_out/
+
+# Node / Cloudflare
+node_modules/
+.wrangler/

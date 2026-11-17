@@ -1,0 +1,27 @@
+# Cloudflare Worker: pemicu jadwal + watchdog Gold Tracker
+name = "gold-tracker-scheduler"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[triggers]
+# Semua dalam UTC. WIB = UTC+7.
+#  "15 2,6,10,14 * * *" → 09:15, 13:15, 17:15, 21:15 WIB : picu job harga
+#  "45 * * * *"         → tiap jam menit 45              : watchdog
+crons = ["15 2,6,10,14 * * *", "45 * * * *"]
+
+[vars]
+GH_OWNER = "GANTI_USERNAME_GITHUB"
+GH_REPO = "gold-tracker"
+GH_REF = "main"
+# Jadwal job harga dalam UTC "jam:menit" — harus sama dengan cron di atas.
+PRICE_SLOTS_UTC = "2:15,6:15,10:15,14:15"
+# Berapa menit setelah jadwal job dianggap terlambat (memberi waktu jadwal cadangan :40).
+GRACE_MIN = "45"
+
+# Secret (diisi lewat perintah `npx wrangler secret put <NAMA>`, BUKAN di file ini):
+#   GH_TOKEN               — GitHub fine-grained token (Actions: Read and write)
+#   SUPABASE_URL           — https://xxxx.supabase.co
+#   SUPABASE_SERVICE_KEY   — secret key Supabase
+#   TELEGRAM_BOT_TOKEN     — token bot
+#   TELEGRAM_ADMIN_CHAT_ID — chat id admin
+#   MANUAL_KEY             — kata sandi bebas untuk memicu manual via URL

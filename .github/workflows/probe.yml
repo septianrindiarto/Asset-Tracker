@@ -1,0 +1,29 @@
+name: probe
+
+# Cek apakah situs sumber bisa diambil DARI SERVER GITHUB (bukan dari laptop).
+# Hasil HTML diunduh di tab Actions › run › Artifacts.
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "URL halaman yang dicek"
+        default: "https://www.logammulia.com/id/harga-emas-hari-ini"
+      name:
+        description: "Nama file hasil"
+        default: "antam_sell"
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests beautifulsoup4
+      - run: python -m jobs.probe_source --url "${{ inputs.url }}" --name "${{ inputs.name }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: probe-${{ inputs.name }}
+          path: probe_out/

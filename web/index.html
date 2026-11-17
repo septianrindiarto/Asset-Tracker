@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gold Tracker · PoC Fase 1</title>
+<style>
+:root{--plum:#522D60;--mauve:#80426E;--peach:#F2A67B;--gold:#FFD38B;--cream:#FFF8F0;--ink:#2B1A33;--muted:#7A6680;--line:#EEDFD3;--up:#2F8F6B;--down:#C4505E}
+*{box-sizing:border-box;margin:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--cream);color:var(--ink);font-size:14px}
+header{background:var(--plum);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+header b{font-size:17px}header b i{color:var(--gold);font-style:normal}
+main{max-width:960px;margin:24px auto;padding:0 16px}
+.card{background:#fff;border-radius:18px;padding:20px;box-shadow:0 6px 24px rgba(82,45,96,.08);margin-bottom:16px}
+h2{color:var(--plum);font-size:17px;margin-bottom:8px}
+.sub{color:var(--muted);font-size:12.5px}
+input{width:100%;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);font-size:14px;margin:10px 0;background:var(--cream)}
+button{padding:10px 16px;border-radius:12px;border:none;font-weight:700;cursor:pointer;background:var(--plum);color:#fff}
+button.g{background:#fff;color:var(--plum);border:1px solid var(--line)}
+.msg{padding:10px 12px;border-radius:12px;margin-top:10px;font-size:13px;display:none}
+.ok{background:#E3F3EC;color:var(--up)}.bad{background:#F9E1E4;color:var(--down)}.info{background:#FFF1D6;color:#8A5E10}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+th{text-align:left;color:var(--muted);font-size:11px;text-transform:uppercase;padding:8px;border-bottom:1px solid var(--line)}
+td{padding:8px;border-bottom:1px solid var(--line)}
+.badge{padding:2px 8px;border-radius:99px;font-size:11.5px;font-weight:700}
+.b-ok{background:#E3F3EC;color:var(--up)}.b-rev{background:#FFF1D6;color:#8A5E10}.b-man{background:#EFE7F2;color:var(--mauve)}.b-fail{background:#F9E1E4;color:var(--down)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.kpi{background:var(--cream);border-radius:14px;padding:12px}.kpi small{color:var(--muted)}.kpi b{display:block;font-size:18px;color:var(--plum);margin-top:2px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header><b><i>✦</i> Gold Tracker <span class="sub" style="color:#E9D9EE">· PoC Fase 1</span></b><button class="g hidden" id="btn-out">Keluar</button></header>
+<main>
+  <section class="card" id="v-login">
+    <h2>Masuk</h2>
+    <p class="sub">Hanya email yang sudah diundang admin. Link masuk akan dikirim ke email.</p>
+    <input id="email" type="email" placeholder="nama@email.com" autocomplete="email">
+    <button id="btn-login">Kirim link masuk</button>
+    <div class="msg" id="login-msg"></div>
+  </section>
+
+  <section class="hidden" id="v-app">
+    <div class="card">
+      <h2 id="hello">Halo</h2>
+      <div class="grid" id="me"></div>
+      <div class="msg" id="access-msg"></div>
+    </div>
+    <div class="card hidden" id="c-prices">
+      <h2>Harga terbaru</h2>
+      <p class="sub">Dari tabel <code>price_snapshots</code> · waktu dalam WIB</p>
+      <div class="grid" id="kpis" style="margin-top:10px"></div>
+      <table><thead><tr><th>Waktu</th><th>Instrumen</th><th>Jenis</th><th>Harga</th><th>Sumber</th><th>Kualitas</th></tr></thead><tbody id="prices"></tbody></table>
+    </div>
+    <div class="card hidden" id="c-jobs">
+      <h2>Log job (admin)</h2>
+      <table><thead><tr><th>Mulai</th><th>Job</th><th>Pemicu</th><th>Status</th><th>Baris</th><th>Catatan</th></tr></thead><tbody id="jobs"></tbody></table>
+    </div>
+  </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
