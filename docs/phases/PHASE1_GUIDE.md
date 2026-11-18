@@ -108,8 +108,10 @@ Saat `git push` pertama, jendela login GitHub muncul → pilih **Sign in with yo
 2. Buka file `D:\Project\Gold Tracker\supabase\migrations\0001_init.sql` dengan Notepad → **Ctrl+A**, **Ctrl+C**.
 3. Tempel di SQL Editor → klik **Run**.
 4. ✅ Harus muncul *"Success. No rows returned"*. Jika error, salin pesannya ke saya. **Jangan** dijalankan dua kali.
+5. Klik **New query** lagi → tempel isi `supabase\migrations\0002_galeri24_source.sql` → **Run** → ✅ *Success*.
+   *Fungsinya:* mengalihkan sumber harga Antam/UBS/Galeri24/Lotus Archi ke situs Galeri24 (Logam Mulia memblokir akses otomatis).
 
-**C3. Cek tabel**: menu **Table Editor** → harus ada `profiles`, `app_config`, `products`, `price_snapshots`, `job_runs`. Isi `products` = 6 baris.
+**C3. Cek tabel**: menu **Table Editor** → harus ada `profiles`, `app_config`, `products`, `price_snapshots`, `job_runs`. Isi `products` = 7 baris (setelah 0002).
 
 **C4. Tutup pendaftaran umum (wajib)**
 **Authentication › Sign In / Providers**:
@@ -300,20 +302,10 @@ Mulai sekarang job harga berjalan **otomatis** pukul 09:15, 13:15, 17:15, 21:15 
 
 ---
 
-## I. Cek sumber harga Antam (penting)
+## I. Sumber harga merek ✅ (sudah selesai, 18 Nov 2026)
 
-Struktur situs Logam Mulia tidak bisa saya lihat dari sini, jadi parser perlu dicocokkan dengan halaman aslinya.
-
-1. GitHub › **Actions › probe › Run workflow** → biarkan default (`antam_sell`) → Run.
-2. Jalankan lagi dengan:
-   - url: `https://www.logammulia.com/id/sell/gold`
-   - name: `antam_buyback`
-3. Buka masing-masing run → step **Run python -m jobs.probe_source** → lihat baris:
-   - `Status HTTP : 200` → situs bisa diakses dari server GitHub ✓
-   - `parse_sell_1g : Rp 2.xxx.xxx` → parser cocok ✓, atau `GAGAL — ...`
-4. Unduh **Artifacts** (bagian bawah halaman run) → berisi file `.html`.
-
-**Kirim ke saya:** potongan log tersebut dan kedua file `.html`. Jika parser gagal, saya perbaiki di **Fase 1.1** (±1 sesi singkat). Jika HTTP 403/blokir, kita pakai input manual admin + sumber alternatif.
+Hasil probe: logammulia.com **diblokir** (403 Akamai, dari GitHub maupun laptop). galeri24.co.id **bisa diakses** (200) dan memuat 19 merek sekaligus. Parser Galeri24 sudah dibuat & diuji dengan halaman asli (Antam 1 g: jual Rp2.553.000 · buyback Rp2.281.000 per 17 Nov).
+Catatan: buyback yang ditampilkan = buyback di outlet Galeri24/Pegadaian (bisa berbeda dari butik Logam Mulia).
 
 ---
 
@@ -341,8 +333,6 @@ Centang setelah dicoba. Laporkan **hanya yang GAGAL**.
 Task      : GT-001 Fase 1 PoC
 Selesai   : A B C D E G H I J  (coret yang belum)
 Gagal     : T-xx — pesan error / screenshot singkat
-Probe     : antam_sell  HTTP ___  parser ___ | antam_buyback HTTP ___ parser ___
-Lampiran  : antam_sell.html, antam_buyback.html
 Catatan   : ...
 ```
 

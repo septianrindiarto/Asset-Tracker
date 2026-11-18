@@ -19,7 +19,7 @@ from .common.env import load_dotenv
 from .common.jobrun import JobRun
 from .common.quality import hour_slot, jump_status, spot_idr_per_gram
 from .common.supa import Supa
-from .sources import antam, market
+from .sources import antam, galeri24, market
 
 WIB = "Asia/Jakarta"
 
@@ -98,25 +98,47 @@ def run(args) -> int:
         rows.append(row("SPOT_IDR_G", "spot", spot, "IDR", "gram", "derived", now, slot, q))
         summary.append(f"Spot Rp {spot:,.0f}/g")
 
-    # 4) Produk dengan metode scrape
-    products = db.select("products", select="id,name,source_ref", pricing_method="eq.scrape", active="is.true") if db else [
-        {"id": "antam", "name": "Logam Mulia Antam",
-         "source_ref": {"sell_url": "https://www.logammulia.com/id/harga-emas-hari-ini",
-                        "buyback_url": "https://www.logammulia.com/id/sell/gold"}}]
+    # 4) Produk dengan metode scrape — sumber per produk di products.source_ref
+    #    {"provider": "galeri24", "vendor": "ANTAM"}  |  {"provider": "logammulia", ...}
+    products = db.select("products", select="id,name,source_ref", pricing_method="eq.scrape",
+                         active="is.true", order="sort_order") if db else [
+        {"id": "antam", "name": "Antam", "source_ref": {"provider": "galeri24", "vendor": "ANTAM"}},
+        {"id": "ubs", "name": "UBS", "source_ref": {"provider": "galeri24", "vendor": "UBS"}},
+        {"id": "galeri24", "name": "Galeri24", "source_ref": {"provider": "galeri24", "vendor": "GALERI 24"}}]
+    g24_rows, g24_err = None, None
     for p in products:
-        if not sources.get(p["id"], True):
+        ref = p.get("source_ref") or {}
+        provider = ref.get("provider", "logammulia")
+        if not sources.get(provider, True):
             continue
-        if p["id"] != "antam":
-            errors[p["id"]] = "parser belum tersedia (Fase 2)"
-            continue
-        if p["id"] in simulate:
+        if p["id"] in simulate or provider in simulate:
             errors[p["id"]] = "simulasi gagal"
             continue
-        res = antam.fetch(p["source_ref"] or {})
+        try:
+            if provider == "galeri24":
+                if g24_rows is None and g24_err is None:
+                    try:
+                        g24_rows, method = galeri24.parse(galeri24.fetch_html(ref.get("url", galeri24.URL)))
+                        if method != "json":
+                            summary.append("ℹ️ Galeri24 dibaca lewat teks (struktur JSON berubah)")
+                    except Exception as e:  # noqa: BLE001
+                        g24_err = str(e)
+                if g24_err:
+                    raise RuntimeError(g24_err)
+                pg = galeri24.per_gram(g24_rows, ref["vendor"])
+                res = {"sell": pg["sell"], "buyback": pg["buyback"], "errors": [],
+                       "observed_at": galeri24.observed_at(pg["updated_at"])}
+                src = "galeri24.co.id"
+            else:
+                res = antam.fetch(ref)
+                src = "logammulia.com"
+        except Exception as e:  # noqa: BLE001
+            errors[p["id"]] = str(e)
+            continue
         for kind in ("sell", "buyback"):
             if res[kind]:
                 q = checked(p["id"], kind, res[kind])
-                rows.append(row(p["id"], kind, res[kind], "IDR", "gram", "logammulia.com", res["observed_at"], slot, q))
+                rows.append(row(p["id"], kind, res[kind], "IDR", "gram", src, res["observed_at"], slot, q))
         if res["sell"] or res["buyback"]:
             sell_txt = f"Rp {res['sell']:,.0f}" if res["sell"] else "-"
             bb_txt = f"Rp {res['buyback']:,.0f}" if res["buyback"] else "-"
